@@ -1,0 +1,740 @@
+/* css/style.css */
+
+/* ==========================================================================
+   1. VARIABILI E PALETTE (Mocha Mousse)
+   ========================================================================== */
+:root {
+  --panna: #F5EFE7;
+  --greige: #BFB0A0;
+  --mocha: #A3805F;
+  --cacao: #7A5B44;
+  --moro: #3E2C22;
+
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-sans: 'Lato', system-ui, -apple-system, sans-serif;
+  --font-eyebrow: 'Cinzel', serif;
+
+  --hero-bg: url('../images/hero.jpg');
+  --transition-smooth: cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* ==========================================================================
+   2. RESET E TIPOGRAFIA GLOBALE
+   ========================================================================== */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--panna);
+  color: var(--moro);
+  font-family: var(--font-sans);
+  font-weight: 300;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  color: var(--moro);
+}
+
+a {
+  color: var(--cacao);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+a:hover, a:focus-visible {
+  color: var(--moro);
+}
+
+:focus-visible {
+  outline: 2px solid var(--mocha);
+  outline-offset: 3px;
+}
+
+.section-padding {
+  padding: 6rem 0;
+}
+
+.bg-sand {
+  background-color: rgba(191, 176, 160, 0.12);
+}
+
+.section-eyebrow {
+  display: block;
+  font-family: var(--font-eyebrow);
+  font-size: 0.85rem;
+  letter-spacing: 0.25rem;
+  color: var(--mocha);
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.section-title {
+  font-size: 2.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.ornament {
+  color: var(--greige);
+  font-size: 0.9rem;
+  letter-spacing: 0.4rem;
+}
+
+/* Pulsanti e Azioni */
+.btn-custom {
+  background-color: var(--cacao);
+  color: var(--panna);
+  border: 1px solid var(--cacao);
+  font-family: var(--font-eyebrow);
+  letter-spacing: 0.1rem;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  transition: all 0.3s ease;
+}
+
+.btn-custom:hover, .btn-custom:focus-visible {
+  background-color: var(--moro);
+  border-color: var(--moro);
+  color: var(--panna);
+}
+
+.btn-custom-outline {
+  background-color: transparent;
+  color: var(--cacao);
+  border: 1px solid var(--cacao);
+  font-family: var(--font-eyebrow);
+  letter-spacing: 0.1rem;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  transition: all 0.3s ease;
+}
+
+.btn-custom-outline:hover, .btn-custom-outline:focus-visible {
+  background-color: var(--cacao);
+  color: var(--panna);
+}
+
+.btn-custom-ghost {
+  background-color: transparent;
+  color: var(--moro);
+  border: 1px solid var(--greige);
+  font-family: var(--font-eyebrow);
+  letter-spacing: 0.1rem;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  transition: all 0.3s ease;
+}
+
+.btn-custom-ghost:hover, .btn-custom-ghost:focus-visible {
+  background-color: var(--greige);
+  color: var(--moro);
+}
+
+/* ==========================================================================
+   3. NAVBAR
+   ========================================================================== */
+#mainNav {
+  background-color: transparent;
+  padding: 1.25rem 0;
+  transition: background-color 0.4s ease, box-shadow 0.4s ease, padding 0.4s ease;
+}
+
+#mainNav.scrolled {
+  background-color: var(--panna);
+  box-shadow: 0 4px 20px rgba(62, 44, 34, 0.06);
+  padding: 0.75rem 0;
+}
+
+#mainNav .navbar-brand {
+  font-family: var(--font-serif);
+  font-size: 1.6rem;
+  letter-spacing: 0.15rem;
+  color: var(--panna);
+  transition: color 0.4s ease;
+}
+
+#mainNav.scrolled .navbar-brand {
+  color: var(--moro);
+}
+
+#mainNav .nav-link {
+  font-family: var(--font-eyebrow);
+  font-size: 0.75rem;
+  letter-spacing: 0.15rem;
+  text-transform: uppercase;
+  color: var(--panna);
+  margin: 0 0.5rem;
+  transition: color 0.3s ease;
+}
+
+#mainNav.scrolled .nav-link {
+  color: var(--moro);
+}
+
+#mainNav .nav-link:hover,
+#mainNav .nav-link:focus-visible {
+  color: var(--mocha);
+}
+
+.navbar-toggler-icon {
+  filter: invert(1);
+}
+
+#mainNav.scrolled .navbar-toggler-icon {
+  filter: invert(0);
+}
+
+/* ==========================================================================
+   4. HERO & KEN BURNS
+   ========================================================================== */
+.hero-section {
+  min-height: 100vh;
+  width: 100%;
+}
+
+.hero-bg-media {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: var(--hero-bg);
+  background-size: cover;
+  background-position: center;
+  transform-origin: center center;
+  animation: kenBurns 25s infinite alternate ease-in-out;
+  z-index: 0;
+}
+
+@keyframes kenBurns {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.08); }
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    180deg,
+    rgba(62, 44, 34, 0.45) 0%,
+    rgba(62, 44, 34, 0.65) 100%
+  );
+  z-index: 1;
+}
+
+/* Transizioni di sequenza Hero */
+.hero-content > * {
+  opacity: 0;
+  transform: translateY(25px);
+  animation: heroFadeUp 1s var(--transition-smooth) forwards;
+}
+
+.hero-content .hero-eyebrow {
+  animation-delay: 0.2s;
+  font-family: var(--font-eyebrow);
+  font-size: 0.9rem;
+  letter-spacing: 0.3rem;
+  color: var(--panna);
+}
+
+.hero-content .hero-title {
+  animation-delay: 0.4s;
+  font-size: clamp(3rem, 8vw, 6rem);
+  font-weight: 300;
+  line-height: 1.1;
+  color: var(--panna);
+}
+
+.hero-content .hero-date {
+  animation-delay: 0.6s;
+  font-family: var(--font-eyebrow);
+  letter-spacing: 0.45rem;
+  font-size: 1.1rem;
+  color: var(--panna);
+}
+
+.hero-content .hero-location {
+  animation-delay: 0.8s;
+  font-size: 1.1rem;
+  font-style: italic;
+  font-family: var(--font-serif);
+  color: var(--greige);
+}
+
+@keyframes heroFadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-scroll-btn {
+  bottom: 2rem;
+  color: var(--panna);
+  font-size: 1.5rem;
+  animation: bounceDown 2s infinite;
+}
+
+@keyframes bounceDown {
+  0%, 20%, 50%, 80%, 100% { transform: translate(-50%, 0); }
+  40% { transform: translate(-50%, -10px); }
+  60% { transform: translate(-50%, -5px); }
+}
+
+/* ==========================================================================
+   5. COUNTDOWN
+   ========================================================================== */
+.counter-card {
+  background-color: var(--panna);
+  border: 1px solid var(--greige);
+  border-radius: 2px;
+}
+
+.counter-val {
+  display: block;
+  font-family: var(--font-serif);
+  color: var(--cacao);
+  line-height: 1;
+}
+
+.counter-lbl {
+  font-family: var(--font-eyebrow);
+  font-size: 0.75rem;
+  letter-spacing: 0.15rem;
+  text-transform: uppercase;
+  color: var(--mocha);
+  margin-top: 0.5rem;
+  display: block;
+}
+
+/* ==========================================================================
+   6. LA NOSTRA STORIA (Vertical Timeline)
+   ========================================================================== */
+.story-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.story-item {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+}
+
+.story-item.reverse {
+  flex-direction: row-reverse;
+}
+
+.story-content {
+  flex: 1;
+}
+
+.story-year {
+  font-family: var(--font-eyebrow);
+  font-size: 0.8rem;
+  letter-spacing: 0.2rem;
+  color: var(--mocha);
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.story-media {
+  flex: 1;
+}
+
+.story-placeholder-box {
+  background-color: rgba(191, 176, 160, 0.2);
+  border: 1px dashed var(--greige);
+  padding: 3.5rem 1.5rem;
+  text-align: center;
+  color: var(--cacao);
+  font-family: var(--font-eyebrow);
+  font-size: 0.85rem;
+  letter-spacing: 0.1rem;
+}
+
+/* ==========================================================================
+   7. DOVE (Location Solive)
+   ========================================================================== */
+.location-card {
+  max-width: 1000px;
+  background-color: var(--panna);
+  border: 1px solid var(--greige);
+}
+
+.badge-single-venue {
+  font-family: var(--font-eyebrow);
+  font-size: 0.75rem;
+  letter-spacing: 0.15rem;
+  color: var(--mocha);
+  border-bottom: 1px solid var(--mocha);
+  padding-bottom: 2px;
+}
+
+.alert-venue {
+  background-color: rgba(163, 128, 95, 0.08);
+  border-left: 3px solid var(--mocha);
+  color: var(--moro);
+  font-size: 0.9rem;
+}
+
+/* ==========================================================================
+   8. PROGRAMMA (Timeline Orizzontale / Verticale)
+   ========================================================================== */
+.schedule-timeline {
+  position: relative;
+  margin-top: 3rem;
+}
+
+.schedule-node {
+  text-align: center;
+  position: relative;
+  padding: 1rem;
+}
+
+.schedule-time {
+  font-family: var(--font-serif);
+  font-size: 1.6rem;
+  color: var(--cacao);
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.schedule-bullet {
+  width: 12px;
+  height: 12px;
+  background-color: var(--mocha);
+  border: 3px solid var(--panna);
+  box-shadow: 0 0 0 1px var(--greige);
+  border-radius: 50%;
+  margin: 0 auto 1rem auto;
+}
+
+.schedule-label {
+  font-size: 1.1rem;
+  margin-bottom: 0.25rem;
+}
+
+.schedule-desc {
+  font-size: 0.85rem;
+  color: var(--greige);
+  margin-bottom: 0;
+}
+
+/* Desktop Track */
+@media (min-width: 992px) {
+  .schedule-track {
+    position: absolute;
+    top: 4.2rem;
+    left: 5%;
+    width: 90%;
+    height: 1px;
+    background-color: var(--greige);
+    z-index: 0;
+  }
+  .schedule-bullet {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+/* ==========================================================================
+   9. DRESS CODE
+   ========================================================================== */
+.swatch-circle {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  box-shadow: 0 4px 12px rgba(62, 44, 34, 0.1);
+  border: 3px solid var(--panna);
+}
+
+.swatch-panna { background-color: var(--panna); border-color: var(--greige); }
+.swatch-greige { background-color: var(--greige); }
+.swatch-mocha { background-color: var(--mocha); }
+.swatch-cacao { background-color: var(--cacao); }
+
+.swatch-title {
+  font-family: var(--font-eyebrow);
+  font-size: 0.8rem;
+  letter-spacing: 0.1rem;
+  color: var(--moro);
+}
+
+.swatch-subtitle {
+  font-size: 0.75rem;
+  color: var(--cacao);
+}
+
+/* ==========================================================================
+   10. GALLERIA & LIGHTBOX
+   ========================================================================== */
+.gallery-thumb {
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  aspect-ratio: 1 / 1;
+}
+
+.gallery-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s var(--transition-smooth);
+}
+
+.gallery-thumb:hover img,
+.gallery-thumb:focus-visible img {
+  transform: scale(1.05);
+}
+
+#lightboxCaption {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-style: italic;
+  color: var(--panna);
+}
+
+/* ==========================================================================
+   11. INFO UTILI (Accordion)
+   ========================================================================== */
+.custom-accordion {
+  max-width: 800px;
+}
+
+.custom-accordion .accordion-item {
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid var(--greige);
+}
+
+.custom-accordion .accordion-button {
+  background-color: transparent;
+  color: var(--moro);
+  font-family: var(--font-serif);
+  font-size: 1.3rem;
+  box-shadow: none;
+  padding: 1.5rem 0.5rem;
+}
+
+.custom-accordion .accordion-button:not(.collapsed) {
+  background-color: transparent;
+  color: var(--cacao);
+  box-shadow: none;
+}
+
+.custom-accordion .accordion-button::after {
+  filter: sepia(1) hue-rotate(330deg) brightness(0.6);
+}
+
+.custom-accordion .accordion-body {
+  padding: 0 0.5rem 1.5rem 0.5rem;
+  font-size: 0.95rem;
+  color: var(--moro);
+}
+
+/* ==========================================================================
+   12. RSVP FORM
+   ========================================================================== */
+.rsvp-wrapper {
+  max-width: 750px;
+  border: 1px solid var(--greige);
+}
+
+.form-label {
+  font-family: var(--font-eyebrow);
+  font-size: 0.75rem;
+  letter-spacing: 0.1rem;
+  text-transform: uppercase;
+  color: var(--moro);
+}
+
+.form-control, .form-select {
+  background-color: var(--panna);
+  border: 1px solid var(--greige);
+  border-radius: 2px;
+  color: var(--moro);
+  padding: 0.65rem 0.9rem;
+}
+
+.form-control:focus, .form-select:focus {
+  background-color: var(--panna);
+  border-color: var(--mocha);
+  box-shadow: 0 0 0 0.25rem rgba(163, 128, 95, 0.15);
+  color: var(--moro);
+}
+
+.attendance-radio input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.attendance-radio .radio-box {
+  border: 1px solid var(--greige);
+  background-color: var(--panna);
+  cursor: pointer;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+  font-family: var(--font-eyebrow);
+  font-size: 0.85rem;
+  letter-spacing: 0.05rem;
+}
+
+.attendance-radio input:checked + .radio-box {
+  border-color: var(--cacao);
+  background-color: rgba(163, 128, 95, 0.12);
+  color: var(--cacao);
+}
+
+.attendance-radio input:focus-visible + .radio-box {
+  outline: 2px solid var(--mocha);
+}
+
+.guest-item-card {
+  background-color: rgba(255, 255, 255, 0.4);
+  border: 1px solid var(--greige);
+  border-radius: 2px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* ==========================================================================
+   13. LISTA NOZZE & FOOTER
+   ========================================================================== */
+.iban-card {
+  max-width: 550px;
+  background-color: var(--panna);
+  border: 1px solid var(--greige);
+}
+
+.iban-code {
+  font-family: monospace;
+  font-size: 1.05rem;
+  background-color: rgba(191, 176, 160, 0.15);
+  padding: 0.4rem 0.8rem;
+  border-radius: 3px;
+  color: var(--moro);
+}
+
+.iban-label {
+  font-family: var(--font-eyebrow);
+  font-size: 0.75rem;
+  letter-spacing: 0.15rem;
+  color: var(--mocha);
+}
+
+.footer-section {
+  background-color: var(--moro);
+  color: var(--panna);
+  padding: 4rem 0 3rem 0;
+}
+
+.footer-names {
+  color: var(--panna);
+  font-size: 2.2rem;
+  margin-bottom: 0.25rem;
+}
+
+.footer-meta {
+  font-family: var(--font-eyebrow);
+  letter-spacing: 0.2rem;
+  font-size: 0.8rem;
+  color: var(--greige);
+}
+
+.footer-hashtag {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  color: var(--mocha);
+  letter-spacing: 0.05rem;
+}
+
+.footer-social-link {
+  color: var(--greige);
+  font-size: 1.25rem;
+  margin: 0 0.5rem;
+  transition: color 0.3s ease;
+}
+
+.footer-social-link:hover, .footer-social-link:focus-visible {
+  color: var(--panna);
+}
+
+.footer-credit {
+  font-size: 0.75rem;
+  letter-spacing: 0.1rem;
+  color: rgba(191, 176, 160, 0.6);
+  text-transform: uppercase;
+}
+
+/* ==========================================================================
+   14. ANIMAZIONI SCROLL REVEAL (Intersection Observer)
+   ========================================================================== */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ==========================================================================
+   15. MEDIA QUERIES & ACCESSIBILITÀ
+   ========================================================================== */
+@media (max-width: 991px) {
+  #mainNav {
+    background-color: var(--panna);
+  }
+  #mainNav .navbar-brand {
+    color: var(--moro);
+  }
+  #mainNav .nav-link {
+    color: var(--moro);
+    padding: 0.5rem 0;
+  }
+  .navbar-toggler-icon {
+    filter: invert(0);
+  }
+  .story-item, .story-item.reverse {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-bg-media {
+    animation: none;
+  }
+  .hero-content > * {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+  .hero-scroll-btn {
+    animation: none;
+  }
+  .reveal {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+  .gallery-thumb img {
+    transition: none;
+  }
+}

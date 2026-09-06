@@ -8,32 +8,35 @@
 const ENDPOINT_RSVP = "";
 
 /**
- * 1. Apertura interattiva Busta / Partecipazione (Stile SiSempre)
+ * 1. Apertura interattiva Busta in stile SiSempre (Immagine 2)
  */
 function initEnvelopeIntro() {
-  const btnOpen = document.getElementById("btnOpenEnvelope");
-  const envelopeBox = document.getElementById("envelopeBox");
+  const btnSeal = document.getElementById("btnOpenEnvelope");
+  const btnPill = document.getElementById("btnOpenPill");
+  const envelopeStage = document.querySelector(".sisempre-envelope-stage");
   const envelopeScreen = document.getElementById("envelopeScreen");
-  const envelopeHint = document.getElementById("envelopeHint");
 
-  if (!btnOpen || !envelopeScreen) return;
+  if (!envelopeScreen) return;
 
-  btnOpen.addEventListener("click", () => {
-    // 1. Avvia apertura flap e sollevamento card
-    envelopeBox.classList.add("anim-open");
-    if (envelopeHint) envelopeHint.style.opacity = "0";
+  const handleOpen = () => {
+    if (envelopeStage) {
+      envelopeStage.classList.add("anim-opening");
+    }
 
-    // 2. Dopo l'apertura, dissolve la busta ed entra nel sito
+    // Effetto sonoro o animazione apertura
     setTimeout(() => {
       envelopeScreen.classList.add("opened");
       document.body.classList.remove("envelope-locked");
 
-      // Inizia i reveal della prima sezione visibile
+      // Ricalcola lo scroll e avvia IntersectionObserver
       setTimeout(() => {
         window.dispatchEvent(new Event("scroll"));
-      }, 300);
-    }, 1100);
-  });
+      }, 250);
+    }, 900);
+  };
+
+  if (btnSeal) btnSeal.addEventListener("click", handleOpen);
+  if (btnPill) btnPill.addEventListener("click", handleOpen);
 }
 
 /**

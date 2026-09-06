@@ -11,6 +11,7 @@
   --moro: #3E2C22;
 
   --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-script: 'Great Vibes', cursive;
   --font-sans: 'Lato', system-ui, -apple-system, sans-serif;
   --font-eyebrow: 'Cinzel', serif;
 
@@ -20,13 +21,14 @@
 }
 
 /* ==========================================================================
-   2. BUSTA & PARTECIPAZIONE INTERATTIVA (Stile SiSempre)
+   2. INTRO BUSTA REALISTICA (Identica a Immagine 2 / SiSempre)
    ========================================================================== */
 body.envelope-locked {
   overflow: hidden;
+  height: 100vh;
 }
 
-.envelope-screen {
+.sisempre-envelope-screen {
   position: fixed;
   top: 0;
   left: 0;
@@ -38,263 +40,289 @@ body.envelope-locked {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: opacity 1.1s var(--transition-smooth), visibility 1.1s var(--transition-smooth);
+  transition: opacity 0.9s var(--transition-smooth), visibility 0.9s var(--transition-smooth), transform 0.9s var(--transition-smooth);
 }
 
-.envelope-screen.opened {
+.sisempre-envelope-screen.opened {
   opacity: 0;
   visibility: hidden;
+  transform: scale(1.05);
   pointer-events: none;
 }
 
-.envelope-wrapper {
+.sisempre-envelope-stage {
+  position: relative;
+  width: 100vw;
+  max-width: 460px;
+  height: 100vh;
+  max-height: 860px;
+  background-color: var(--panna);
+  overflow: hidden;
+  box-shadow: 0 25px 60px rgba(62, 44, 34, 0.25);
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 1rem;
+  justify-content: space-between;
 }
 
-.envelope-container {
-  position: relative;
-  width: 320px;
-  height: 220px;
-  background-color: var(--greige);
-  box-shadow: 0 16px 40px rgba(62, 44, 34, 0.2);
-  border-radius: 4px;
-}
-
-@media (min-width: 480px) {
-  .envelope-container {
-    width: 380px;
-    height: 250px;
+@media (min-width: 576px) {
+  .sisempre-envelope-stage {
+    border-radius: 6px;
+    height: 92vh;
   }
 }
 
-/* Strati della busta */
-.envelope-back {
+/* Grana della carta lino in background */
+.sisempre-paper-texture {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: var(--greige);
-  border-radius: 4px;
+  background: 
+    radial-gradient(circle at 50% 45%, rgba(245, 239, 231, 0.8) 0%, rgba(191, 176, 160, 0.35) 100%),
+    repeating-linear-gradient(45deg, rgba(191, 176, 160, 0.04) 0px, rgba(191, 176, 160, 0.04) 2px, transparent 2px, transparent 4px);
   z-index: 1;
 }
 
-.envelope-card {
-  position: absolute;
-  top: 10px;
-  left: 15px;
-  right: 15px;
-  bottom: 10px;
-  background-color: var(--panna);
-  border: 1px solid var(--greige);
-  border-radius: 3px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 1rem;
-  z-index: 2;
-  transition: transform 0.8s var(--transition-smooth);
-  box-shadow: 0 4px 12px rgba(62, 44, 34, 0.08);
-}
-
-.envelope-container.anim-open .envelope-card {
-  transform: translateY(-90px);
-}
-
-.card-eyebrow {
-  font-family: var(--font-eyebrow);
-  font-size: 0.65rem;
-  letter-spacing: 0.2rem;
-  color: var(--mocha);
-  text-transform: uppercase;
-}
-
-.card-names {
-  font-family: var(--font-serif);
-  font-size: 1.6rem;
-  margin: 0.3rem 0;
-  color: var(--moro);
-}
-
-.card-date {
-  font-family: var(--font-eyebrow);
-  font-size: 0.8rem;
-  letter-spacing: 0.15rem;
-  color: var(--cacao);
-}
-
-.card-place {
-  font-family: var(--font-serif);
-  font-size: 0.95rem;
-  font-style: italic;
-  color: var(--greige);
-}
-
-.envelope-left {
+/* Flap Superiore a V con bassorilievo floreale */
+.sisempre-flap {
   position: absolute;
   top: 0;
   left: 0;
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 110px 0 110px 160px;
-  border-color: transparent transparent transparent rgba(163, 128, 95, 0.35);
+  width: 100%;
+  height: 48%;
   z-index: 3;
+  transform-origin: top center;
+  transition: transform 0.85s var(--transition-smooth);
 }
 
-@media (min-width: 480px) {
-  .envelope-left {
-    border-width: 125px 0 125px 190px;
-  }
+.sisempre-relief-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  filter: drop-shadow(0 4px 6px rgba(62, 44, 34, 0.12));
 }
 
-.envelope-right {
+.sisempre-flap-shadow {
   position: absolute;
   top: 0;
-  right: 0;
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 110px 160px 110px 0;
-  border-color: transparent rgba(163, 128, 95, 0.35) transparent transparent;
-  z-index: 3;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  clip-path: polygon(0 0, 100% 0, 50% 68%);
+  box-shadow: 0 16px 25px rgba(62, 44, 34, 0.22);
+  pointer-events: none;
 }
 
-@media (min-width: 480px) {
-  .envelope-right {
-    border-width: 125px 190px 125px 0;
-  }
-}
-
-.envelope-bottom {
+/* Falda inferiore a V con piega */
+.sisempre-body-pocket {
   position: absolute;
   bottom: 0;
   left: 0;
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 0 160px 120px 160px;
-  border-color: transparent transparent rgba(122, 91, 68, 0.25) transparent;
-  z-index: 4;
+  width: 100%;
+  height: 60%;
+  z-index: 2;
+  clip-path: polygon(0 20%, 50% 0%, 100% 20%, 100% 100%, 0 100%);
+  background-color: var(--panna);
+  box-shadow: inset 0 2px 8px rgba(191, 176, 160, 0.4);
 }
 
-@media (min-width: 480px) {
-  .envelope-bottom {
-    border-width: 0 190px 135px 190px;
-  }
-}
-
-.envelope-flap {
+/* Linee diagonali della busta */
+.sisempre-crease-left {
   position: absolute;
   top: 0;
   left: 0;
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 120px 160px 0 160px;
-  border-color: rgba(122, 91, 68, 0.4) transparent transparent transparent;
-  transform-origin: top center;
-  transition: transform 0.65s var(--transition-smooth), z-index 0.3s linear;
-  z-index: 5;
+  width: 50%;
+  height: 48%;
+  border-right: 1px solid rgba(191, 176, 160, 0.45);
+  transform: skewY(27deg);
+  transform-origin: top left;
+  z-index: 4;
+  pointer-events: none;
 }
 
-@media (min-width: 480px) {
-  .envelope-flap {
-    border-width: 135px 190px 0 190px;
-  }
-}
-
-.envelope-container.anim-open .envelope-flap {
-  transform: rotateX(180deg);
-  z-index: 1;
-}
-
-/* Sigillo in Ceralacca */
-.wax-seal {
+.sisempre-crease-right {
   position: absolute;
-  top: 50%;
+  top: 0;
+  right: 0;
+  width: 50%;
+  height: 48%;
+  border-left: 1px solid rgba(191, 176, 160, 0.45);
+  transform: skewY(-27deg);
+  transform-origin: top right;
+  z-index: 4;
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   SIGILLO IN CERALACCA REALISTICO 3D (Posizionato all'incrocio della busta)
+   ========================================================================== */
+.sisempre-seal-wrapper {
+  position: absolute;
+  top: 47%;
   left: 50%;
-  transform: translate(-50%, -35%);
-  width: 68px;
-  height: 68px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, var(--mocha), var(--cacao), var(--moro));
+  transform: translate(-50%, -50%);
+  z-index: 10;
+}
+
+.sisempre-wax-seal {
+  position: relative;
+  width: 154px;
+  height: 154px;
+  background: transparent;
   border: none;
+  padding: 0;
   cursor: pointer;
-  z-index: 6;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 6px 18px rgba(62, 44, 34, 0.35);
-  transition: transform 0.3s var(--transition-fast), opacity 0.4s ease;
+  transition: transform 0.35s var(--transition-fast), filter 0.35s ease;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.wax-seal:hover {
-  transform: translate(-50%, -35%) scale(1.08);
+.sisempre-wax-seal:hover {
+  transform: scale(1.05);
 }
 
-.wax-seal:focus-visible {
-  outline: 2px solid var(--panna);
-  outline-offset: 3px;
+.sisempre-wax-seal:active {
+  transform: scale(0.97);
 }
 
-.wax-seal-inner {
-  font-family: var(--font-serif);
-  font-size: 1.05rem;
-  color: var(--panna);
-  letter-spacing: 0.15rem;
-  text-shadow: 0 1px 2px rgba(62, 44, 34, 0.6);
-  font-weight: 600;
-}
-
-.seal-glow {
+.wax-blob-svg {
   position: absolute;
-  top: -4px;
-  left: -4px;
-  right: -4px;
-  bottom: -4px;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Medaglione dorato interno */
+.seal-metal-medallion {
+  position: relative;
+  width: 90px;
+  height: 90px;
   border-radius: 50%;
-  border: 1px dashed rgba(245, 239, 231, 0.6);
-  animation: pulseRotate 12s linear infinite;
+  background: radial-gradient(circle at 35% 30%, #F5EFE7 0%, #BFB0A0 45%, #A3805F 80%, #7A5B44 100%);
+  box-shadow: 
+    inset 0 2px 4px rgba(245, 239, 231, 0.9),
+    inset 0 -3px 6px rgba(62, 44, 34, 0.5),
+    0 3px 8px rgba(62, 44, 34, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(163, 128, 95, 0.6);
+  z-index: 2;
+}
+
+.seal-filigree-ring {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.filigree-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.seal-monogram-text {
+  font-family: var(--font-script);
+  font-size: 2.35rem;
+  color: var(--moro);
+  text-shadow: 
+    0 1px 1px rgba(245, 239, 231, 0.9),
+    0 -1px 2px rgba(62, 44, 34, 0.7);
+  letter-spacing: 0.05rem;
+  transform: translateY(-2px);
+  user-select: none;
+}
+
+.seal-specular-light {
+  position: absolute;
+  top: 16px;
+  left: 32px;
+  width: 38px;
+  height: 20px;
+  background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.65) 0%, rgba(255, 255, 255, 0) 75%);
+  transform: rotate(-35deg);
+  border-radius: 50%;
   pointer-events: none;
+  z-index: 3;
 }
 
-@keyframes pulseRotate {
-  0% { transform: rotate(0deg); opacity: 0.4; }
-  50% { opacity: 0.8; }
-  100% { transform: rotate(360deg); opacity: 0.4; }
+/* Animazione all'apertura del sigillo */
+.sisempre-envelope-stage.anim-opening .sisempre-flap {
+  transform: rotateX(160deg);
+  z-index: 1;
 }
 
-.envelope-container.anim-open .wax-seal {
-  opacity: 0;
-  transform: translate(-50%, -35%) scale(0.6);
-  pointer-events: none;
+.sisempre-envelope-stage.anim-opening .sisempre-seal-wrapper {
+  animation: sealPop 0.8s var(--transition-smooth) forwards;
 }
 
-.envelope-hint {
-  font-family: var(--font-eyebrow);
-  font-size: 0.75rem;
-  letter-spacing: 0.2rem;
-  color: var(--cacao);
-  text-transform: uppercase;
-  margin-top: 2rem;
-  animation: hintBlink 2.2s infinite ease-in-out;
+@keyframes sealPop {
+  0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  45% { transform: translate(-50%, -50%) scale(1.18); opacity: 0.9; }
+  100% { transform: translate(-50%, -80%) scale(0.6); opacity: 0; }
 }
 
-@keyframes hintBlink {
-  0%, 100% { opacity: 0.5; }
-  50% { opacity: 1; }
+/* ==========================================================================
+   SCRITTA NOMI IN CORSIVO E BOTTONE PILLOLA (Basso Schermo)
+   ========================================================================== */
+.sisempre-footer-action {
+  position: absolute;
+  bottom: 6%;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  z-index: 12;
+  padding: 0 1.5rem;
 }
 
+.sisempre-script-names {
+  font-family: var(--font-script);
+  font-size: clamp(2.8rem, 8vw, 3.8rem);
+  color: var(--moro);
+  text-shadow: 0 1px 2px rgba(245, 239, 231, 0.8);
+  margin-bottom: 1.25rem;
+  font-weight: 400;
+}
+
+.sisempre-pill-btn {
+  display: inline-block;
+  background: rgba(62, 44, 34, 0.62);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: var(--panna);
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.05rem;
+  letter-spacing: 0.05rem;
+  padding: 0.6rem 2.2rem;
+  border-radius: 50px;
+  border: 1px solid rgba(245, 239, 231, 0.45);
+  box-shadow: 0 6px 16px rgba(62, 44, 34, 0.18);
+  cursor: pointer;
+  transition: all 0.3s var(--transition-fast);
+}
+
+.sisempre-pill-btn:hover {
+  background: rgba(62, 44, 34, 0.82);
+  color: #FFFFFF;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(62, 44, 34, 0.25);
+}
+
+.sisempre-pill-btn:active {
+  transform: translateY(0);
+}
+
+/* Transizione contenuto del sito */
 .site-content {
   opacity: 0;
-  transition: opacity 1s var(--transition-smooth);
+  transition: opacity 1.1s var(--transition-smooth);
 }
 
 body:not(.envelope-locked) .site-content {
@@ -1241,11 +1269,6 @@ a:hover, a:focus-visible {
 
   .gallery-thumb img,
   .story-img-wrap img {
-    transition: none;
-  }
-
-  .envelope-container.anim-open .envelope-card,
-  .envelope-container.anim-open .envelope-flap {
     transition: none;
   }
 }

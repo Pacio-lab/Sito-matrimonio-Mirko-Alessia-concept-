@@ -8,7 +8,42 @@
 const ENDPOINT_RSVP = "";
 
 /**
- * 1. Countdown verso il 26 Maggio 2028 ore 16:00 (Inizio evento)
+ * 1. Indicatore di Progresso Scorrimento & Pulsante Ritorno in Cima
+ */
+function initScrollIndicator() {
+  const progressBar = document.getElementById("scrollProgress");
+  const backToTopBtn = document.getElementById("btnBackToTop");
+
+  const onScroll = () => {
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const scrollPercent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+
+    if (progressBar) {
+      progressBar.style.width = `${scrollPercent}%`;
+      progressBar.setAttribute("aria-valuenow", Math.round(scrollPercent));
+    }
+
+    if (backToTopBtn) {
+      if (scrollTop > 450) {
+        backToTopBtn.classList.add("show");
+      } else {
+        backToTopBtn.classList.remove("show");
+      }
+    }
+  };
+
+  window.addEventListener("scroll", onScroll, { passive: true });
+
+  if (backToTopBtn) {
+    backToTopBtn.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  }
+}
+
+/**
+ * 2. Countdown live al 26 Maggio 2028 ore 16:00 (Europe/Rome)
  */
 function initCountdown() {
   const targetDate = new Date("2028-05-26T16:00:00+02:00").getTime();
@@ -49,7 +84,7 @@ function initCountdown() {
 }
 
 /**
- * 2. Animazioni di comparsa allo scorrimento (IntersectionObserver)
+ * 3. Animazioni al raggiungimento dello scroll tramite IntersectionObserver
  */
 function initScrollReveal() {
   const reveals = document.querySelectorAll(".reveal");
@@ -65,8 +100,8 @@ function initScrollReveal() {
         });
       },
       {
-        threshold: 0.15,
-        rootMargin: "0px 0px -40px 0px"
+        threshold: 0.12,
+        rootMargin: "0px 0px -50px 0px"
       }
     );
 
@@ -77,7 +112,7 @@ function initScrollReveal() {
 }
 
 /**
- * 3. Galleria fotografica e Lightbox modale
+ * 4. Galleria fotografica e Lightbox modale Bootstrap
  */
 function initGallery() {
   const modalEl = document.getElementById("galleryModal");
@@ -110,7 +145,7 @@ function initGallery() {
 }
 
 /**
- * 4. Logica RSVP form: toggle sezioni, campi ripetibili e validazione
+ * 5. Logica del form RSVP: sezioni condizionali, campi ripetibili, validazione
  */
 function initRsvpForm() {
   const form = document.getElementById("rsvpForm");
@@ -129,6 +164,7 @@ function initRsvpForm() {
 
   let guestCounter = 0;
 
+  // Toggle logico Si / No con animazione discreta
   const toggleAttendanceView = () => {
     if (presenceYes.checked) {
       detailsYes.classList.remove("d-none");
@@ -142,6 +178,7 @@ function initRsvpForm() {
   presenceYes.addEventListener("change", toggleAttendanceView);
   presenceNo.addEventListener("change", toggleAttendanceView);
 
+  // Gestione dinamica età bambini
   childrenSelect.addEventListener("change", (e) => {
     const count = parseInt(e.target.value, 10);
     childrenAgesContainer.innerHTML = "";
@@ -163,6 +200,7 @@ function initRsvpForm() {
     }
   });
 
+  // Aggiunta dinamica blocco ospiti aggiuntivi con preferenze dietetiche
   btnAddGuest.addEventListener("click", () => {
     guestCounter++;
     const card = document.createElement("div");
@@ -170,7 +208,7 @@ function initRsvpForm() {
     card.id = `guestBlock_${guestCounter}`;
     card.innerHTML = `
       <div class="d-flex justify-content-between align-items-center mb-2">
-        <span class="form-label mb-0">Ospite Aggiuntivo #${guestCounter}</span>
+        <span class="form-label mb-0 text-uppercase">Ospite Aggiuntivo #${guestCounter}</span>
         <button type="button" class="btn-close btn-sm" aria-label="Rimuovi Ospite" data-remove-target="guestBlock_${guestCounter}"></button>
       </div>
       <div class="mb-3">
@@ -235,6 +273,7 @@ function initRsvpForm() {
     guestsContainer.appendChild(card);
   });
 
+  // Validazione ed invio asincrono
   form.addEventListener("submit", (event) => {
     event.preventDefault();
     event.stopPropagation();
@@ -260,7 +299,7 @@ function initRsvpForm() {
           if (res.ok) {
             mostraConferma();
           } else {
-            throw new Error("Errore invio");
+            throw new Error("Errore durante la registrazione");
           }
         })
         .catch(() => {
@@ -269,9 +308,10 @@ function initRsvpForm() {
           alert("Si è verificato un errore durante l'invio. Riprova più tardi.");
         });
     } else {
+      // Mockup con feedback visivo naturale
       setTimeout(() => {
         mostraConferma();
-      }, 700);
+      }, 600);
     }
 
     function mostraConferma() {
@@ -283,7 +323,7 @@ function initRsvpForm() {
 }
 
 /**
- * 5. Copia IBAN negli appunti
+ * 6. Copia IBAN negli appunti con feedback visivo moderno
  */
 function initCopyIban() {
   const btnCopy = document.getElementById("btnCopyIban");
@@ -303,7 +343,7 @@ function initCopyIban() {
       setTimeout(() => {
         copyText.textContent = originalText;
         copyIcon.className = "bi bi-clipboard me-1";
-      }, 2500);
+      }, 2400);
     }).catch(() => {
       alert("Impossibile copiare automaticamente. Seleziona il testo manualmente.");
     });
@@ -311,9 +351,10 @@ function initCopyIban() {
 }
 
 /**
- * Inizializzazione globale all'evento DOMContentLoaded
+ * Inizializzazione di tutti i moduli al caricamento completo del DOM
  */
 function init() {
+  initScrollIndicator();
   initCountdown();
   initScrollReveal();
   initGallery();

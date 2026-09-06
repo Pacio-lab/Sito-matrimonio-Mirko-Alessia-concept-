@@ -8,7 +8,36 @@
 const ENDPOINT_RSVP = "";
 
 /**
- * 1. Indicatore di Progresso Scorrimento & Pulsante Ritorno in Cima
+ * 1. Apertura interattiva Busta / Partecipazione (Stile SiSempre)
+ */
+function initEnvelopeIntro() {
+  const btnOpen = document.getElementById("btnOpenEnvelope");
+  const envelopeBox = document.getElementById("envelopeBox");
+  const envelopeScreen = document.getElementById("envelopeScreen");
+  const envelopeHint = document.getElementById("envelopeHint");
+
+  if (!btnOpen || !envelopeScreen) return;
+
+  btnOpen.addEventListener("click", () => {
+    // 1. Avvia apertura flap e sollevamento card
+    envelopeBox.classList.add("anim-open");
+    if (envelopeHint) envelopeHint.style.opacity = "0";
+
+    // 2. Dopo l'apertura, dissolve la busta ed entra nel sito
+    setTimeout(() => {
+      envelopeScreen.classList.add("opened");
+      document.body.classList.remove("envelope-locked");
+
+      // Inizia i reveal della prima sezione visibile
+      setTimeout(() => {
+        window.dispatchEvent(new Event("scroll"));
+      }, 300);
+    }, 1100);
+  });
+}
+
+/**
+ * 2. Indicatore di Progresso Scorrimento & Pulsante Ritorno in Cima
  */
 function initScrollIndicator() {
   const progressBar = document.getElementById("scrollProgress");
@@ -43,7 +72,7 @@ function initScrollIndicator() {
 }
 
 /**
- * 2. Countdown live al 26 Maggio 2028 ore 16:00 (Europe/Rome)
+ * 3. Countdown live al 26 Maggio 2028 ore 16:00 (Europe/Rome)
  */
 function initCountdown() {
   const targetDate = new Date("2028-05-26T16:00:00+02:00").getTime();
@@ -84,7 +113,7 @@ function initCountdown() {
 }
 
 /**
- * 3. Animazioni al raggiungimento dello scroll tramite IntersectionObserver
+ * 4. Animazioni al raggiungimento dello scroll tramite IntersectionObserver
  */
 function initScrollReveal() {
   const reveals = document.querySelectorAll(".reveal");
@@ -112,7 +141,7 @@ function initScrollReveal() {
 }
 
 /**
- * 4. Galleria fotografica e Lightbox modale Bootstrap
+ * 5. Galleria fotografica e Lightbox modale Bootstrap
  */
 function initGallery() {
   const modalEl = document.getElementById("galleryModal");
@@ -145,7 +174,7 @@ function initGallery() {
 }
 
 /**
- * 5. Logica del form RSVP: sezioni condizionali, campi ripetibili, validazione
+ * 6. Logica del form RSVP: sezioni condizionali, campi ripetibili, validazione
  */
 function initRsvpForm() {
   const form = document.getElementById("rsvpForm");
@@ -318,7 +347,7 @@ function initRsvpForm() {
 }
 
 /**
- * 6. Copia IBAN negli appunti
+ * 7. Copia IBAN negli appunti
  */
 function initCopyIban() {
   const btnCopy = document.getElementById("btnCopyIban");
@@ -346,9 +375,10 @@ function initCopyIban() {
 }
 
 /**
- * Inizializzazione moduli
+ * Inizializzazione globale
  */
 function init() {
+  initEnvelopeIntro();
   initScrollIndicator();
   initCountdown();
   initScrollReveal();

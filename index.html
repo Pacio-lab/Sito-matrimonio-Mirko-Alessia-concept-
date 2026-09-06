@@ -7,9 +7,9 @@
   <title>Mirko & Alessia — 26 Maggio 2028</title>
 
   <!-- SEO & Open Graph -->
-  <meta name="description" content="Celebra con noi il matrimonio di Mirko e Alessia. Sabato 26 maggio 2028, ore 16:00, presso Agriturismo Solive, Franciacorta.">
+  <meta name="description" content="Partecipazione di nozze di Mirko e Alessia. Sabato 26 maggio 2028, ore 16:00, presso Agriturismo Solive, Franciacorta.">
   <meta property="og:title" content="Mirko & Alessia — 26 Maggio 2028">
-  <meta property="og:description" content="Rito civile, ricevimento e festa fino a notte fonda presso l'Agriturismo Solive in Franciacorta.">
+  <meta property="og:description" content="Rito civile, ricevimento e festa presso l'Agriturismo Solive in Franciacorta.">
   <meta property="og:image" content="images/hero.jpg">
   <meta property="og:type" content="website">
 
@@ -22,613 +22,644 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-  <!-- Foglio di Stile Personalizzato (stessa cartella) -->
+  <!-- Foglio di Stile -->
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="envelope-locked">
 
-  <!-- Indicatore di scorrimento in testa -->
-  <div id="scrollProgress" class="scroll-progress-bar" role="progressbar" aria-label="Progresso pagina" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+  <!-- OVERLAY BUSTA INTERATTIVA (Stile SiSempre) -->
+  <div id="envelopeScreen" class="envelope-screen">
+    <div class="envelope-wrapper">
+      <div class="envelope-container" id="envelopeBox">
+        <!-- Tasca posteriore -->
+        <div class="envelope-back"></div>
+        
+        <!-- Cartoncino interno invito -->
+        <div class="envelope-card">
+          <span class="card-eyebrow">Partecipazione di Nozze</span>
+          <h2 class="card-names">Mirko &amp; Alessia</h2>
+          <div class="card-date">26 Maggio 2028</div>
+          <span class="card-place">Franciacorta</span>
+        </div>
 
-  <!-- 1. HERO -->
-  <header id="hero" class="hero-section position-relative overflow-hidden text-center d-flex align-items-center justify-content-center">
-    <div class="hero-bg-media"></div>
-    <div class="hero-overlay"></div>
-    <div class="hero-content container position-relative z-2 text-light">
-      <p class="hero-eyebrow text-uppercase mb-3">Ci sposiamo</p>
-      <div class="hero-monogram mb-2">M &amp; A</div>
-      <h1 class="hero-title my-2">Mirko &amp; Alessia</h1>
-      <div class="hero-divider-line mx-auto my-3"></div>
-      <p class="hero-date text-uppercase my-2">26 . 05 . 2028</p>
-      <p class="hero-location mb-0">Ore 16:00 · Franciacorta, Brescia</p>
-    </div>
-    <a href="#countdown" class="hero-scroll-btn position-absolute start-50 translate-middle-x z-2" aria-label="Scorri ai dettagli">
-      <span class="hero-scroll-label d-block text-uppercase mb-1">Scopri</span>
-      <i class="bi bi-chevron-down"></i>
-    </a>
-  </header>
+        <!-- Flap inferiore e laterali -->
+        <div class="envelope-bottom"></div>
+        <div class="envelope-left"></div>
+        <div class="envelope-right"></div>
+        
+        <!-- Flap superiore apribile -->
+        <div class="envelope-flap" id="envelopeFlap"></div>
 
-  <!-- 2. COUNTDOWN LIVE -->
-  <section id="countdown" class="section-padding text-center bg-sand position-relative">
-    <div class="container reveal">
-      <span class="section-eyebrow">Il nostro tempo insieme</span>
-      <h2 class="section-title">Contiamo i Giorni</h2>
-      <div class="ornament">✦ · ✦ · ✦</div>
-      <p class="section-intro mx-auto mt-3">Ogni istante ci avvicina al momento in cui ci scambieremo le nostre promesse.</p>
-      <div class="row justify-content-center g-3 g-md-4 mt-4" id="countdown-clock">
-        <div class="col-6 col-sm-3 col-md-2">
-          <div class="counter-card p-3 p-md-4">
-            <span class="counter-val display-5" id="cd-days">00</span>
-            <span class="counter-lbl">Giorni</span>
-          </div>
-        </div>
-        <div class="col-6 col-sm-3 col-md-2">
-          <div class="counter-card p-3 p-md-4">
-            <span class="counter-val display-5" id="cd-hours">00</span>
-            <span class="counter-lbl">Ore</span>
-          </div>
-        </div>
-        <div class="col-6 col-sm-3 col-md-2">
-          <div class="counter-card p-3 p-md-4">
-            <span class="counter-val display-5" id="cd-minutes">00</span>
-            <span class="counter-lbl">Minuti</span>
-          </div>
-        </div>
-        <div class="col-6 col-sm-3 col-md-2">
-          <div class="counter-card p-3 p-md-4">
-            <span class="counter-val display-5" id="cd-seconds">00</span>
-            <span class="counter-lbl">Secondi</span>
-          </div>
-        </div>
+        <!-- Sigillo in ceralacca con Monogramma -->
+        <button type="button" class="wax-seal" id="btnOpenEnvelope" aria-label="Apri la partecipazione">
+          <span class="wax-seal-inner">M &amp; A</span>
+          <span class="seal-glow"></span>
+        </button>
       </div>
-    </div>
-  </section>
-
-  <!-- 3. LA NOSTRA STORIA -->
-  <section id="storia" class="section-padding">
-    <div class="container">
-      <div class="text-center mb-5 reveal">
-        <span class="section-eyebrow">Il nostro cammino</span>
-        <h2 class="section-title">La Nostra Storia</h2>
-        <div class="ornament">✦ · ✦ · ✦</div>
-        <p class="lead col-lg-8 mx-auto mt-3">
-          Un legame nato nella spontaneità, cresciuto tra risate e progetti di vita, pronto a sbocciare nella bellezza della Franciacorta.
-        </p>
-      </div>
-
-      <div class="story-timeline position-relative">
-        <!-- Tappa 1: 16 Aprile 2023 -->
-        <div class="story-item reveal">
-          <div class="story-content">
-            <span class="story-year">16 Aprile 2023</span>
-            <h3 class="h4">Il Primo Passo Insieme</h3>
-            <p>Il giorno in cui abbiamo capito che i nostri sguardi andavano nella stessa direzione. Da allora, ogni passo è stato condiviso con naturalezza e fiducia.</p>
-          </div>
-          <div class="story-media">
-            <div class="story-img-wrap">
-              <!-- Dimensioni previste: 1200x1500 -->
-              <img src="images/story-1.jpg" alt="Mirko e Alessia, 16 aprile 2023" loading="lazy" class="img-fluid rounded-1 shadow-sm">
-            </div>
-          </div>
-        </div>
-
-        <!-- Tappa 2 -->
-        <div class="story-item reverse reveal">
-          <div class="story-content">
-            <span class="story-year">[ANNO 2024]</span>
-            <h3 class="h4">La Nostra Casa</h3>
-            <p>Le chiavi sul tavolo, le sere passate a scegliere colori e dettagli, il calore di una quotidianità costruita con amorevole pazienza.</p>
-          </div>
-          <div class="story-media">
-            <div class="story-img-wrap">
-              <!-- Dimensioni previste: 1200x1500 -->
-              <img src="images/story-2.jpg" alt="Mirko e Alessia nella loro vita insieme" loading="lazy" class="img-fluid rounded-1 shadow-sm">
-            </div>
-          </div>
-        </div>
-
-        <!-- Tappa 3 -->
-        <div class="story-item reveal">
-          <div class="story-content">
-            <span class="story-year">[ANNO 2026]</span>
-            <h3 class="h4">La Proposta</h3>
-            <p>La luce dorata del tramonto sulle colline e una domanda sincera che ha fatto battere forte il cuore. Una promessa per il domani.</p>
-          </div>
-          <div class="story-media">
-            <div class="story-placeholder-box rounded-1">
-              <i class="bi bi-gem display-6"></i>
-              <p class="mt-2 mb-0 text-uppercase letter-spacing-1">Il Nostro Sì al Tramonto</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Tappa 4 -->
-        <div class="story-item reverse reveal">
-          <div class="story-content">
-            <span class="story-year">26 Maggio 2028</span>
-            <h3 class="h4">Il Grande Giorno</h3>
-            <p>Dalle ore 16:00 fino alle 02:00, circondati dalle persone che amiamo di più, per dare inizio al capitolo più atteso della nostra vita.</p>
-          </div>
-          <div class="story-media">
-            <div class="story-placeholder-box rounded-1">
-              <i class="bi bi-stars display-6"></i>
-              <p class="mt-2 mb-0 text-uppercase letter-spacing-1">Solive · 16:00 - 02:00</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 4. DOVE -->
-  <section id="dove" class="section-padding bg-sand">
-    <div class="container reveal">
-      <div class="text-center mb-5">
-        <span class="section-eyebrow">La cornice del giorno</span>
-        <h2 class="section-title">La Location</h2>
-        <div class="ornament">✦ · ✦ · ✦</div>
-      </div>
-
-      <div class="card border-0 location-card mx-auto shadow-sm overflow-hidden">
-        <div class="row g-0">
-          <div class="col-lg-6">
-            <div class="location-img-wrap h-100">
-              <!-- Dimensioni previste: 1600x1000 -->
-              <img src="images/solive-1.jpg" alt="Vista panoramica di Agriturismo Solive in Franciacorta" loading="lazy" class="img-fluid h-100 object-fit-cover w-100">
-            </div>
-          </div>
-          <div class="col-lg-6 d-flex align-items-center">
-            <div class="card-body p-4 p-md-5">
-              <span class="badge-single-venue text-uppercase mb-3 d-inline-block">Location Unica</span>
-              <h3 class="card-title h3 mb-3">Agriturismo Solive</h3>
-              <p class="location-context mb-3">
-                Immerso nel cuore armonioso della Franciacorta, adagiato tra vigneti terrazzati e ulivi secolari, tra Brescia e il Lago d'Iseo.
-              </p>
-              <div class="alert-venue p-3 mb-4 rounded-1">
-                <i class="bi bi-geo-alt-fill me-2"></i>
-                <strong>Zero spostamenti:</strong> Il rito civile, l'aperitivo, la cena e il party fino a notte fonda si terranno interamente nella stessa struttura.
-              </div>
-              <p class="location-detail mb-2"><i class="bi bi-pin-map-fill me-2"></i>Via Calvarole 15, 25030 Nigoline di Corte Franca (BS)</p>
-              <p class="location-detail mb-4"><i class="bi bi-telephone-fill me-2"></i>+39 030 988 4201</p>
-              <div class="d-flex flex-wrap gap-2">
-                <a href="https://maps.google.com/?q=Agriturismo+Solive+Corte+Franca" target="_blank" rel="noopener noreferrer" class="btn btn-custom-outline">
-                  <i class="bi bi-map me-1"></i> Apri in Maps
-                </a>
-                <a href="https://www.solive.it" target="_blank" rel="noopener noreferrer" class="btn btn-custom-ghost">
-                  <i class="bi bi-globe me-1"></i> Visita il Sito
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 5. PROGRAMMA -->
-  <section id="programma" class="section-padding">
-    <div class="container reveal">
-      <div class="text-center mb-5">
-        <span class="section-eyebrow">I momenti insieme</span>
-        <h2 class="section-title">Il Programma</h2>
-        <div class="ornament">✦ · ✦ · ✦</div>
-      </div>
-
-      <div class="schedule-timeline">
-        <div class="schedule-track d-none d-lg-block"></div>
-        <div class="row g-4 justify-content-center">
-          <div class="col-12 col-md-6 col-lg schedule-step">
-            <div class="schedule-node">
-              <span class="schedule-time">16:00</span>
-              <div class="schedule-bullet"></div>
-              <h4 class="schedule-label">Arrivo Ospiti</h4>
-              <p class="schedule-desc">Accoglienza nel parco tra gli ulivi</p>
-            </div>
-          </div>
-          <div class="col-12 col-md-6 col-lg schedule-step">
-            <div class="schedule-node">
-              <span class="schedule-time">16:30</span>
-              <div class="schedule-bullet"></div>
-              <h4 class="schedule-label">Rito Civile</h4>
-              <p class="schedule-desc">La celebrazione del nostro sì</p>
-            </div>
-          </div>
-          <div class="col-12 col-md-6 col-lg schedule-step">
-            <div class="schedule-node">
-              <span class="schedule-time">17:30</span>
-              <div class="schedule-bullet"></div>
-              <h4 class="schedule-label">Aperitivo</h4>
-              <p class="schedule-desc">Franciacorta e sapori sotto il porticato</p>
-            </div>
-          </div>
-          <div class="col-12 col-md-6 col-lg schedule-step">
-            <div class="schedule-node">
-              <span class="schedule-time">19:30</span>
-              <div class="schedule-bullet"></div>
-              <h4 class="schedule-label">Cena Nuziale</h4>
-              <p class="schedule-desc">Nella sala grande della tenuta</p>
-            </div>
-          </div>
-          <div class="col-12 col-md-6 col-lg schedule-step">
-            <div class="schedule-node">
-              <span class="schedule-time">22:30</span>
-              <div class="schedule-bullet"></div>
-              <h4 class="schedule-label">Taglio Torta</h4>
-              <p class="schedule-desc">Brindisi sotto le stelle e confettata</p>
-            </div>
-          </div>
-          <div class="col-12 col-md-6 col-lg schedule-step">
-            <div class="schedule-node">
-              <span class="schedule-time">23:30</span>
-              <div class="schedule-bullet"></div>
-              <h4 class="schedule-label">Party &amp; DJ Set</h4>
-              <p class="schedule-desc">Open bar, musica e balli nel parco</p>
-            </div>
-          </div>
-          <div class="col-12 col-md-6 col-lg schedule-step">
-            <div class="schedule-node">
-              <span class="schedule-time">02:00</span>
-              <div class="schedule-bullet"></div>
-              <h4 class="schedule-label">Saluti</h4>
-              <p class="schedule-desc">Buonanotte e ringraziamenti</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 6. DRESS CODE -->
-  <section id="dresscode" class="section-padding bg-sand text-center">
-    <div class="container reveal">
-      <span class="section-eyebrow">Armonia &amp; Stile</span>
-      <h2 class="section-title">Dress Code</h2>
-      <div class="ornament">✦ · ✦ · ✦</div>
-      <p class="col-lg-6 mx-auto mt-3 mb-5">
-        Per creare un’atmosfera intima e naturale, vi invitiamo a prediligere i toni caldi della terra e dei vigneti, lasciando il bianco puro esclusivamente alla sposa.
-      </p>
-
-      <div class="row justify-content-center g-4">
-        <div class="col-6 col-sm-3 col-md-2">
-          <div class="swatch-card p-3">
-            <div class="swatch-circle swatch-panna mx-auto mb-3"></div>
-            <span class="swatch-title d-block">Sposa</span>
-            <span class="swatch-subtitle d-block">Panna</span>
-          </div>
-        </div>
-        <div class="col-6 col-sm-3 col-md-2">
-          <div class="swatch-card p-3">
-            <div class="swatch-circle swatch-greige mx-auto mb-3"></div>
-            <span class="swatch-title d-block">Sposo</span>
-            <span class="swatch-subtitle d-block">Greige</span>
-          </div>
-        </div>
-        <div class="col-6 col-sm-3 col-md-2">
-          <div class="swatch-card p-3">
-            <div class="swatch-circle swatch-mocha mx-auto mb-3"></div>
-            <span class="swatch-title d-block">Damigelle</span>
-            <span class="swatch-subtitle d-block">Mocha</span>
-          </div>
-        </div>
-        <div class="col-6 col-sm-3 col-md-2">
-          <div class="swatch-card p-3">
-            <div class="swatch-circle swatch-cacao mx-auto mb-3"></div>
-            <span class="swatch-title d-block">Testimoni</span>
-            <span class="swatch-subtitle d-block">Cacao</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 7. GALLERIA -->
-  <section id="galleria" class="section-padding">
-    <div class="container reveal">
-      <div class="text-center mb-5">
-        <span class="section-eyebrow">Scorci di noi</span>
-        <h2 class="section-title">Galleria</h2>
-        <div class="ornament">✦ · ✦ · ✦</div>
-      </div>
-
-      <div class="row g-3 g-md-4">
-        <!-- 6 immagini: 1200x1200 ciascuna -->
-        <div class="col-6 col-md-4">
-          <div class="gallery-thumb rounded-1 shadow-sm" role="button" tabindex="0" data-img-src="images/gallery-1.jpg" data-caption="Passeggiata tra le vigne al tramonto">
-            <!-- Dimensioni previste: 1200x1200 -->
-            <img src="images/gallery-1.jpg" alt="Mirko e Alessia durante una passeggiata tra i vigneti" loading="lazy" class="img-fluid w-100 h-100 object-fit-cover">
-            <div class="gallery-thumb-overlay"><i class="bi bi-arrows-angle-expand"></i></div>
-          </div>
-        </div>
-        <div class="col-6 col-md-4">
-          <div class="gallery-thumb rounded-1 shadow-sm" role="button" tabindex="0" data-img-src="images/gallery-2.jpg" data-caption="Lago d'Iseo al crepuscolo">
-            <!-- Dimensioni previste: 1200x1200 -->
-            <img src="images/gallery-2.jpg" alt="Tramonto romantico sul Lago d'Iseo" loading="lazy" class="img-fluid w-100 h-100 object-fit-cover">
-            <div class="gallery-thumb-overlay"><i class="bi bi-arrows-angle-expand"></i></div>
-          </div>
-        </div>
-        <div class="col-6 col-md-4">
-          <div class="gallery-thumb rounded-1 shadow-sm" role="button" tabindex="0" data-img-src="images/gallery-3.jpg" data-caption="Calici e brindisi sotto gli ulivi">
-            <!-- Dimensioni previste: 1200x1200 -->
-            <img src="images/gallery-3.jpg" alt="Dettaglio di calici di Franciacorta" loading="lazy" class="img-fluid w-100 h-100 object-fit-cover">
-            <div class="gallery-thumb-overlay"><i class="bi bi-arrows-angle-expand"></i></div>
-          </div>
-        </div>
-        <div class="col-6 col-md-4">
-          <div class="gallery-thumb rounded-1 shadow-sm" role="button" tabindex="0" data-img-src="images/gallery-4.jpg" data-caption="Sorrisi e sguardi complici">
-            <!-- Dimensioni previste: 1200x1200 -->
-            <img src="images/gallery-4.jpg" alt="Ritratto spontaneo di Mirko e Alessia" loading="lazy" class="img-fluid w-100 h-100 object-fit-cover">
-            <div class="gallery-thumb-overlay"><i class="bi bi-arrows-angle-expand"></i></div>
-          </div>
-        </div>
-        <div class="col-6 col-md-4">
-          <div class="gallery-thumb rounded-1 shadow-sm" role="button" tabindex="0" data-img-src="images/gallery-5.jpg" data-caption="Panorama sulla Franciacorta">
-            <!-- Dimensioni previste: 1200x1200 -->
-            <img src="images/gallery-5.jpg" alt="Scorcio panoramico della campagna bresciana" loading="lazy" class="img-fluid w-100 h-100 object-fit-cover">
-            <div class="gallery-thumb-overlay"><i class="bi bi-arrows-angle-expand"></i></div>
-          </div>
-        </div>
-        <div class="col-6 col-md-4">
-          <div class="gallery-thumb rounded-1 shadow-sm" role="button" tabindex="0" data-img-src="images/gallery-6.jpg" data-caption="Un passo verso il nostro 26 Maggio">
-            <!-- Dimensioni previste: 1200x1200 -->
-            <img src="images/gallery-6.jpg" alt="Mani intrecciate con anello in primo piano" loading="lazy" class="img-fluid w-100 h-100 object-fit-cover">
-            <div class="gallery-thumb-overlay"><i class="bi bi-arrows-angle-expand"></i></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Modale Lightbox Galleria -->
-  <div class="modal fade" id="galleryModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
-      <div class="modal-content bg-transparent border-0">
-        <div class="modal-body p-0 position-relative text-center">
-          <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-3 z-3" data-bs-dismiss="modal" aria-label="Chiudi"></button>
-          <img src="" id="lightboxImg" class="img-fluid rounded-1 shadow-lg" alt="Dettaglio galleria">
-          <p id="lightboxCaption" class="text-light mt-3"></p>
-        </div>
-      </div>
+      <p class="envelope-hint" id="envelopeHint">Tocca il sigillo per aprire l'invito</p>
     </div>
   </div>
 
-  <!-- 8. INFO UTILI -->
-  <section id="info" class="section-padding bg-sand">
-    <div class="container reveal">
-      <div class="text-center mb-5">
-        <span class="section-eyebrow">Dettagli pratici</span>
-        <h2 class="section-title">Informazioni Utili</h2>
-        <div class="ornament">✦ · ✦ · ✦</div>
+  <!-- Indicatore di avanzamento lettura -->
+  <div id="scrollProgress" class="scroll-progress-bar" role="progressbar" aria-label="Progresso pagina" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+
+  <!-- CONTENUTO DEL SITO -->
+  <div id="siteContent" class="site-content">
+    
+    <!-- 1. HERO -->
+    <header id="hero" class="hero-section position-relative overflow-hidden text-center d-flex align-items-center justify-content-center">
+      <div class="hero-bg-media"></div>
+      <div class="hero-overlay"></div>
+      <div class="hero-content container position-relative z-2 text-light">
+        <p class="hero-eyebrow text-uppercase mb-3">Ci sposiamo</p>
+        <div class="hero-monogram mb-2">M &amp; A</div>
+        <h1 class="hero-title my-2">Mirko &amp; Alessia</h1>
+        <div class="hero-divider-line mx-auto my-3"></div>
+        <p class="hero-date text-uppercase my-2">26 . 05 . 2028</p>
+        <p class="hero-location mb-0">Ore 16:00 · Franciacorta, Brescia</p>
       </div>
+      <a href="#countdown" class="hero-scroll-btn position-absolute start-50 translate-middle-x z-2" aria-label="Scorri ai dettagli">
+        <span class="hero-scroll-label d-block text-uppercase mb-1">Scopri</span>
+        <i class="bi bi-chevron-down"></i>
+      </a>
+    </header>
 
-      <div class="accordion custom-accordion mx-auto" id="infoAccordion">
-        <div class="accordion-item">
-          <h3 class="accordion-header" id="headingOne">
-            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-              <i class="bi bi-car-front me-3"></i> Come Arrivare e Parcheggio
-            </button>
-          </h3>
-          <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#infoAccordion">
-            <div class="accordion-body">
-              L'Agriturismo Solive è comodamente raggiungibile tramite l'autostrada A4 (uscita Rovato o Ospitaletto), seguendo le indicazioni per Iseo/Corte Franca. La tenuta dispone di un ampio parcheggio interno gratuito riservato a tutti gli invitati per l'intera durata dell'evento, fino alle ore 02:00.
+    <!-- 2. COUNTDOWN LIVE -->
+    <section id="countdown" class="section-padding text-center bg-sand position-relative">
+      <div class="container reveal">
+        <span class="section-eyebrow">Il nostro tempo insieme</span>
+        <h2 class="section-title">Contiamo i Giorni</h2>
+        <div class="ornament">✦ · ✦ · ✦</div>
+        <p class="section-intro mx-auto mt-3">Ogni istante ci avvicina al momento in cui ci scambieremo le nostre promesse.</p>
+        <div class="row justify-content-center g-3 g-md-4 mt-4" id="countdown-clock">
+          <div class="col-6 col-sm-3 col-md-2">
+            <div class="counter-card p-3 p-md-4">
+              <span class="counter-val display-5" id="cd-days">00</span>
+              <span class="counter-lbl">Giorni</span>
+            </div>
+          </div>
+          <div class="col-6 col-sm-3 col-md-2">
+            <div class="counter-card p-3 p-md-4">
+              <span class="counter-val display-5" id="cd-hours">00</span>
+              <span class="counter-lbl">Ore</span>
+            </div>
+          </div>
+          <div class="col-6 col-sm-3 col-md-2">
+            <div class="counter-card p-3 p-md-4">
+              <span class="counter-val display-5" id="cd-minutes">00</span>
+              <span class="counter-lbl">Minuti</span>
+            </div>
+          </div>
+          <div class="col-6 col-sm-3 col-md-2">
+            <div class="counter-card p-3 p-md-4">
+              <span class="counter-val display-5" id="cd-seconds">00</span>
+              <span class="counter-lbl">Secondi</span>
             </div>
           </div>
         </div>
+      </div>
+    </section>
 
-        <div class="accordion-item">
-          <h3 class="accordion-header" id="headingTwo">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-              <i class="bi bi-door-open me-3"></i> Alloggi e Pernottamento
-            </button>
-          </h3>
-          <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#infoAccordion">
-            <div class="accordion-body">
-              Poiché festeggeremo fino a tarda notte, Solive offre camere in loco immerse nella tranquillità della Franciacorta. Per aiutarci a coordinare le sistemazioni con le strutture convenzionate nei dintorni, vi invitiamo a selezionare l'apposita casella nel modulo RSVP.
+    <!-- 3. LA NOSTRA STORIA -->
+    <section id="storia" class="section-padding">
+      <div class="container">
+        <div class="text-center mb-5 reveal">
+          <span class="section-eyebrow">Il nostro cammino</span>
+          <h2 class="section-title">La Nostra Storia</h2>
+          <div class="ornament">✦ · ✦ · ✦</div>
+          <p class="lead col-lg-8 mx-auto mt-3">
+            Un legame nato nella spontaneità, cresciuto tra risate e progetti di vita, pronto a sbocciare nella bellezza della Franciacorta.
+          </p>
+        </div>
+
+        <div class="story-timeline position-relative">
+          <!-- Tappa 1: 16 Aprile 2023 -->
+          <div class="story-item reveal">
+            <div class="story-content">
+              <span class="story-year">16 Aprile 2023</span>
+              <h3 class="h4">Il Primo Passo Insieme</h3>
+              <p>Il giorno in cui abbiamo capito che i nostri sguardi andavano nella stessa direzione. Da allora, ogni passo è stato condiviso con naturalezza e fiducia.</p>
+            </div>
+            <div class="story-media">
+              <div class="story-img-wrap">
+                <!-- Dimensioni previste: 1200x1500 -->
+                <img src="images/story-1.jpg" alt="Mirko e Alessia, 16 aprile 2023" loading="lazy" class="img-fluid rounded-1 shadow-sm">
+              </div>
+            </div>
+          </div>
+
+          <!-- Tappa 2 -->
+          <div class="story-item reverse reveal">
+            <div class="story-content">
+              <span class="story-year">[ANNO 2024]</span>
+              <h3 class="h4">La Nostra Casa</h3>
+              <p>Le chiavi sul tavolo, le sere passate a scegliere colori e dettagli, il calore di una quotidianità costruita con amorevole pazienza.</p>
+            </div>
+            <div class="story-media">
+              <div class="story-img-wrap">
+                <!-- Dimensioni previste: 1200x1500 -->
+                <img src="images/story-2.jpg" alt="Mirko e Alessia nella loro vita insieme" loading="lazy" class="img-fluid rounded-1 shadow-sm">
+              </div>
+            </div>
+          </div>
+
+          <!-- Tappa 3 -->
+          <div class="story-item reveal">
+            <div class="story-content">
+              <span class="story-year">[ANNO 2026]</span>
+              <h3 class="h4">La Proposta</h3>
+              <p>La luce dorata del tramonto sulle colline e una domanda sincera che ha fatto battere forte il cuore. Una promessa per il domani.</p>
+            </div>
+            <div class="story-media">
+              <div class="story-placeholder-box rounded-1">
+                <i class="bi bi-gem display-6"></i>
+                <p class="mt-2 mb-0 text-uppercase letter-spacing-1">Il Nostro Sì al Tramonto</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tappa 4 -->
+          <div class="story-item reverse reveal">
+            <div class="story-content">
+              <span class="story-year">26 Maggio 2028</span>
+              <h3 class="h4">Il Grande Giorno</h3>
+              <p>Dalle ore 16:00 fino alle 02:00, circondati dalle persone che amiamo di più, per dare inizio al capitolo più atteso della nostra vita.</p>
+            </div>
+            <div class="story-media">
+              <div class="story-placeholder-box rounded-1">
+                <i class="bi bi-stars display-6"></i>
+                <p class="mt-2 mb-0 text-uppercase letter-spacing-1">Solive · 16:00 - 02:00</p>
+              </div>
             </div>
           </div>
         </div>
+      </div>
+    </section>
 
-        <div class="accordion-item">
-          <h3 class="accordion-header" id="headingThree">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-              <i class="bi bi-balloon-heart me-3"></i> Piccoli Ospiti (Bambini)
-            </button>
-          </h3>
-          <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#infoAccordion">
-            <div class="accordion-body">
-              I bambini sono una gioia e saranno i benvenuti! Sarà previsto un menu dedicato ai più piccoli e ampi giardini in cui muoversi in totale libertà e sicurezza. Vi chiediamo gentilmente di specificare numero ed età nel modulo RSVP.
+    <!-- 4. DOVE -->
+    <section id="dove" class="section-padding bg-sand">
+      <div class="container reveal">
+        <div class="text-center mb-5">
+          <span class="section-eyebrow">La cornice del giorno</span>
+          <h2 class="section-title">La Location</h2>
+          <div class="ornament">✦ · ✦ · ✦</div>
+        </div>
+
+        <div class="card border-0 location-card mx-auto shadow-sm overflow-hidden">
+          <div class="row g-0">
+            <div class="col-lg-6">
+              <div class="location-img-wrap h-100">
+                <!-- Dimensioni previste: 1600x1000 -->
+                <img src="images/solive-1.jpg" alt="Vista panoramica di Agriturismo Solive in Franciacorta" loading="lazy" class="img-fluid h-100 object-fit-cover w-100">
+              </div>
+            </div>
+            <div class="col-lg-6 d-flex align-items-center">
+              <div class="card-body p-4 p-md-5">
+                <span class="badge-single-venue text-uppercase mb-3 d-inline-block">Location Unica</span>
+                <h3 class="card-title h3 mb-3">Agriturismo Solive</h3>
+                <p class="location-context mb-3">
+                  Immerso nel cuore armonioso della Franciacorta, adagiato tra vigneti terrazzati e ulivi secolari, tra Brescia e il Lago d'Iseo.
+                </p>
+                <div class="alert-venue p-3 mb-4 rounded-1">
+                  <i class="bi bi-geo-alt-fill me-2"></i>
+                  <strong>Zero spostamenti:</strong> Il rito civile, l'aperitivo, la cena e il party fino a notte fonda si terranno interamente nella stessa struttura.
+                </div>
+                <p class="location-detail mb-2"><i class="bi bi-pin-map-fill me-2"></i>Via Calvarole 15, 25030 Nigoline di Corte Franca (BS)</p>
+                <p class="location-detail mb-4"><i class="bi bi-telephone-fill me-2"></i>+39 030 988 4201</p>
+                <div class="d-flex flex-wrap gap-2">
+                  <a href="https://maps.google.com/?q=Agriturismo+Solive+Corte+Franca" target="_blank" rel="noopener noreferrer" class="btn btn-custom-outline">
+                    <i class="bi bi-map me-1"></i> Apri in Maps
+                  </a>
+                  <a href="https://www.solive.it" target="_blank" rel="noopener noreferrer" class="btn btn-custom-ghost">
+                    <i class="bi bi-globe me-1"></i> Visita il Sito
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
         </div>
+      </div>
+    </section>
 
-        <div class="accordion-item">
-          <h3 class="accordion-header" id="headingFour">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-              <i class="bi bi-chat-dots me-3"></i> Contatti degli Sposi
-            </button>
-          </h3>
-          <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#infoAccordion">
-            <div class="accordion-body">
-              Per ogni informazione dell'ultimo minuto o per qualsiasi richiesta specifica:<br>
-              <strong>Mirko:</strong> [+39 3XX XXXXXXX] · <strong>Alessia:</strong> [+39 3XX XXXXXXX]<br>
-              Email dedicata: [EMAIL@SPOSI.IT]
+    <!-- 5. PROGRAMMA -->
+    <section id="programma" class="section-padding">
+      <div class="container reveal">
+        <div class="text-center mb-5">
+          <span class="section-eyebrow">I momenti insieme</span>
+          <h2 class="section-title">Il Programma</h2>
+          <div class="ornament">✦ · ✦ · ✦</div>
+        </div>
+
+        <div class="schedule-timeline">
+          <div class="schedule-track d-none d-lg-block"></div>
+          <div class="row g-4 justify-content-center">
+            <div class="col-12 col-md-6 col-lg schedule-step">
+              <div class="schedule-node">
+                <span class="schedule-time">16:00</span>
+                <div class="schedule-bullet"></div>
+                <h4 class="schedule-label">Arrivo Ospiti</h4>
+                <p class="schedule-desc">Accoglienza nel parco tra gli ulivi</p>
+              </div>
             </div>
+            <div class="col-12 col-md-6 col-lg schedule-step">
+              <div class="schedule-node">
+                <span class="schedule-time">16:30</span>
+                <div class="schedule-bullet"></div>
+                <h4 class="schedule-label">Rito Civile</h4>
+                <p class="schedule-desc">La celebrazione del nostro sì</p>
+              </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg schedule-step">
+              <div class="schedule-node">
+                <span class="schedule-time">17:30</span>
+                <div class="schedule-bullet"></div>
+                <h4 class="schedule-label">Aperitivo</h4>
+                <p class="schedule-desc">Franciacorta e sapori sotto il porticato</p>
+              </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg schedule-step">
+              <div class="schedule-node">
+                <span class="schedule-time">19:30</span>
+                <div class="schedule-bullet"></div>
+                <h4 class="schedule-label">Cena Nuziale</h4>
+                <p class="schedule-desc">Nella sala grande della tenuta</p>
+              </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg schedule-step">
+              <div class="schedule-node">
+                <span class="schedule-time">22:30</span>
+                <div class="schedule-bullet"></div>
+                <h4 class="schedule-label">Taglio Torta</h4>
+                <p class="schedule-desc">Brindisi sotto le stelle e confettata</p>
+              </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg schedule-step">
+              <div class="schedule-node">
+                <span class="schedule-time">23:30</span>
+                <div class="schedule-bullet"></div>
+                <h4 class="schedule-label">Party &amp; DJ Set</h4>
+                <p class="schedule-desc">Open bar, musica e balli nel parco</p>
+              </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg schedule-step">
+              <div class="schedule-node">
+                <span class="schedule-time">02:00</span>
+                <div class="schedule-bullet"></div>
+                <h4 class="schedule-label">Saluti</h4>
+                <p class="schedule-desc">Buonanotte e ringraziamenti</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. DRESS CODE -->
+    <section id="dresscode" class="section-padding bg-sand text-center">
+      <div class="container reveal">
+        <span class="section-eyebrow">Armonia &amp; Stile</span>
+        <h2 class="section-title">Dress Code</h2>
+        <div class="ornament">✦ · ✦ · ✦</div>
+        <p class="col-lg-6 mx-auto mt-3 mb-5">
+          Per creare un’atmosfera intima e naturale, vi invitiamo a prediligere i toni caldi della terra e dei vigneti, lasciando il bianco puro esclusivamente alla sposa.
+        </p>
+
+        <div class="row justify-content-center g-4">
+          <div class="col-6 col-sm-3 col-md-2">
+            <div class="swatch-card p-3">
+              <div class="swatch-circle swatch-panna mx-auto mb-3"></div>
+              <span class="swatch-title d-block">Sposa</span>
+              <span class="swatch-subtitle d-block">Panna</span>
+            </div>
+          </div>
+          <div class="col-6 col-sm-3 col-md-2">
+            <div class="swatch-card p-3">
+              <div class="swatch-circle swatch-greige mx-auto mb-3"></div>
+              <span class="swatch-title d-block">Sposo</span>
+              <span class="swatch-subtitle d-block">Greige</span>
+            </div>
+          </div>
+          <div class="col-6 col-sm-3 col-md-2">
+            <div class="swatch-card p-3">
+              <div class="swatch-circle swatch-mocha mx-auto mb-3"></div>
+              <span class="swatch-title d-block">Damigelle</span>
+              <span class="swatch-subtitle d-block">Mocha</span>
+            </div>
+          </div>
+          <div class="col-6 col-sm-3 col-md-2">
+            <div class="swatch-card p-3">
+              <div class="swatch-circle swatch-cacao mx-auto mb-3"></div>
+              <span class="swatch-title d-block">Testimoni</span>
+              <span class="swatch-subtitle d-block">Cacao</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. GALLERIA -->
+    <section id="galleria" class="section-padding">
+      <div class="container reveal">
+        <div class="text-center mb-5">
+          <span class="section-eyebrow">Scorci di noi</span>
+          <h2 class="section-title">Galleria</h2>
+          <div class="ornament">✦ · ✦ · ✦</div>
+        </div>
+
+        <div class="row g-3 g-md-4">
+          <div class="col-6 col-md-4">
+            <div class="gallery-thumb rounded-1 shadow-sm" role="button" tabindex="0" data-img-src="images/gallery-1.jpg" data-caption="Passeggiata tra le vigne al tramonto">
+              <img src="images/gallery-1.jpg" alt="Mirko e Alessia durante una passeggiata tra i vigneti" loading="lazy" class="img-fluid w-100 h-100 object-fit-cover">
+              <div class="gallery-thumb-overlay"><i class="bi bi-arrows-angle-expand"></i></div>
+            </div>
+          </div>
+          <div class="col-6 col-md-4">
+            <div class="gallery-thumb rounded-1 shadow-sm" role="button" tabindex="0" data-img-src="images/gallery-2.jpg" data-caption="Lago d'Iseo al crepuscolo">
+              <img src="images/gallery-2.jpg" alt="Tramonto romantico sul Lago d'Iseo" loading="lazy" class="img-fluid w-100 h-100 object-fit-cover">
+              <div class="gallery-thumb-overlay"><i class="bi bi-arrows-angle-expand"></i></div>
+            </div>
+          </div>
+          <div class="col-6 col-md-4">
+            <div class="gallery-thumb rounded-1 shadow-sm" role="button" tabindex="0" data-img-src="images/gallery-3.jpg" data-caption="Calici e brindisi sotto gli ulivi">
+              <img src="images/gallery-3.jpg" alt="Dettaglio di calici di Franciacorta" loading="lazy" class="img-fluid w-100 h-100 object-fit-cover">
+              <div class="gallery-thumb-overlay"><i class="bi bi-arrows-angle-expand"></i></div>
+            </div>
+          </div>
+          <div class="col-6 col-md-4">
+            <div class="gallery-thumb rounded-1 shadow-sm" role="button" tabindex="0" data-img-src="images/gallery-4.jpg" data-caption="Sorrisi e sguardi complici">
+              <img src="images/gallery-4.jpg" alt="Ritratto spontaneo di Mirko e Alessia" loading="lazy" class="img-fluid w-100 h-100 object-fit-cover">
+              <div class="gallery-thumb-overlay"><i class="bi bi-arrows-angle-expand"></i></div>
+            </div>
+          </div>
+          <div class="col-6 col-md-4">
+            <div class="gallery-thumb rounded-1 shadow-sm" role="button" tabindex="0" data-img-src="images/gallery-5.jpg" data-caption="Panorama sulla Franciacorta">
+              <img src="images/gallery-5.jpg" alt="Scorcio panoramico della campagna bresciana" loading="lazy" class="img-fluid w-100 h-100 object-fit-cover">
+              <div class="gallery-thumb-overlay"><i class="bi bi-arrows-angle-expand"></i></div>
+            </div>
+          </div>
+          <div class="col-6 col-md-4">
+            <div class="gallery-thumb rounded-1 shadow-sm" role="button" tabindex="0" data-img-src="images/gallery-6.jpg" data-caption="Un passo verso il nostro 26 Maggio">
+              <img src="images/gallery-6.jpg" alt="Mani intrecciate con anello in primo piano" loading="lazy" class="img-fluid w-100 h-100 object-fit-cover">
+              <div class="gallery-thumb-overlay"><i class="bi bi-arrows-angle-expand"></i></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Modale Lightbox Galleria -->
+    <div class="modal fade" id="galleryModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content bg-transparent border-0">
+          <div class="modal-body p-0 position-relative text-center">
+            <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-3 z-3" data-bs-dismiss="modal" aria-label="Chiudi"></button>
+            <img src="" id="lightboxImg" class="img-fluid rounded-1 shadow-lg" alt="Dettaglio galleria">
+            <p id="lightboxCaption" class="text-light mt-3"></p>
           </div>
         </div>
       </div>
     </div>
-  </section>
 
-  <!-- 9. RSVP -->
-  <section id="rsvp" class="section-padding">
-    <div class="container reveal">
-      <div class="text-center mb-5">
-        <span class="section-eyebrow">La vostra presenza</span>
-        <h2 class="section-title">Conferma Partecipazione</h2>
-        <div class="ornament">✦ · ✦ · ✦</div>
-        <p class="lead col-lg-8 mx-auto mt-3">
-          Ogni momento è pensato per essere vissuto insieme. Vi chiediamo la cortesia di confermare la vostra presenza entro il [DATA LIMITE 15 APRILE 2028].
-        </p>
+    <!-- 8. INFO UTILI -->
+    <section id="info" class="section-padding bg-sand">
+      <div class="container reveal">
+        <div class="text-center mb-5">
+          <span class="section-eyebrow">Dettagli pratici</span>
+          <h2 class="section-title">Informazioni Utili</h2>
+          <div class="ornament">✦ · ✦ · ✦</div>
+        </div>
+
+        <div class="accordion custom-accordion mx-auto" id="infoAccordion">
+          <div class="accordion-item">
+            <h3 class="accordion-header" id="headingOne">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                <i class="bi bi-car-front me-3"></i> Come Arrivare e Parcheggio
+              </button>
+            </h3>
+            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#infoAccordion">
+              <div class="accordion-body">
+                L'Agriturismo Solive è comodamente raggiungibile tramite l'autostrada A4 (uscita Rovato o Ospitaletto), seguendo le indicazioni per Iseo/Corte Franca. La tenuta dispone di un ampio parcheggio interno gratuito riservato a tutti gli invitati per l'intera durata dell'evento, fino alle ore 02:00.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h3 class="accordion-header" id="headingTwo">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                <i class="bi bi-door-open me-3"></i> Alloggi e Pernottamento
+              </button>
+            </h3>
+            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#infoAccordion">
+              <div class="accordion-body">
+                Poiché festeggeremo fino a tarda notte, Solive offre camere in loco immerse nella tranquillità della Franciacorta. Per aiutarci a coordinare le sistemazioni con le strutture convenzionate nei dintorni, vi invitiamo a selezionare l'apposita casella nel modulo RSVP.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h3 class="accordion-header" id="headingThree">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                <i class="bi bi-balloon-heart me-3"></i> Piccoli Ospiti (Bambini)
+              </button>
+            </h3>
+            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#infoAccordion">
+              <div class="accordion-body">
+                I bambini sono una gioia e saranno i benvenuti! Sarà previsto un menu dedicato ai più piccoli e ampi giardini in cui muoversi in totale libertà e sicurezza. Vi chiediamo gentilmente di specificare numero ed età nel modulo RSVP.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h3 class="accordion-header" id="headingFour">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                <i class="bi bi-chat-dots me-3"></i> Contatti degli Sposi
+              </button>
+            </h3>
+            <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#infoAccordion">
+              <div class="accordion-body">
+                Per ogni informazione dell'ultimo minuto o per qualsiasi richiesta specifica:<br>
+                <strong>Mirko:</strong> [+39 3XX XXXXXXX] · <strong>Alessia:</strong> [+39 3XX XXXXXXX]<br>
+                Email dedicata: [EMAIL@SPOSI.IT]
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+    </section>
 
-      <div class="rsvp-wrapper mx-auto p-4 p-md-5 rounded-2 shadow-sm bg-sand">
-        <form id="rsvpForm" novalidate>
-          <div class="row g-3">
-            <div class="col-md-6">
-              <label for="rsvpName" class="form-label">Nome e Cognome *</label>
-              <input type="text" class="form-control" id="rsvpName" name="nome" required>
-              <div class="invalid-feedback">Inserisci nome e cognome.</div>
-            </div>
-            <div class="col-md-6">
-              <label for="rsvpEmail" class="form-label">Email *</label>
-              <input type="email" class="form-control" id="rsvpEmail" name="email" required>
-              <div class="invalid-feedback">Inserisci un indirizzo email valido.</div>
-            </div>
-            <div class="col-md-12">
-              <label for="rsvpPhone" class="form-label">Telefono</label>
-              <input type="tel" class="form-control" id="rsvpPhone" name="telefono" placeholder="+39 ...">
-            </div>
-          </div>
+    <!-- 9. RSVP -->
+    <section id="rsvp" class="section-padding">
+      <div class="container reveal">
+        <div class="text-center mb-5">
+          <span class="section-eyebrow">La vostra presenza</span>
+          <h2 class="section-title">Conferma Partecipazione</h2>
+          <div class="ornament">✦ · ✦ · ✦</div>
+          <p class="lead col-lg-8 mx-auto mt-3">
+            Ogni momento è pensato per essere vissuto insieme. Vi chiediamo la cortesia di confermare la vostra presenza entro il [DATA LIMITE 15 APRILE 2028].
+          </p>
+        </div>
 
-          <div class="my-4">
-            <span class="form-label d-block mb-3">Sarai con noi al matrimonio? *</span>
-            <div class="d-flex flex-column flex-sm-row gap-3">
-              <label class="attendance-radio flex-fill">
-                <input type="radio" name="presenza" id="presenceYes" value="si" required>
-                <div class="radio-box text-center p-3">
-                  <i class="bi bi-heart-fill d-block mb-2"></i>
-                  <span>Ci sarò con gioia!</span>
-                </div>
-              </label>
-              <label class="attendance-radio flex-fill">
-                <input type="radio" name="presenza" id="presenceNo" value="no" required>
-                <div class="radio-box text-center p-3">
-                  <i class="bi bi-envelope-heart d-block mb-2"></i>
-                  <span>Purtroppo non potrò esserci</span>
-                </div>
-              </label>
-            </div>
-          </div>
-
-          <!-- Sezione Presenza: SÌ -->
-          <div id="rsvpDetailsYes" class="d-none border-top pt-4 mt-4">
+        <div class="rsvp-wrapper mx-auto p-4 p-md-5 rounded-2 shadow-sm bg-sand">
+          <form id="rsvpForm" novalidate>
             <div class="row g-3">
               <div class="col-md-6">
-                <label for="adultCount" class="form-label">Numero Adulti</label>
-                <select class="form-select" id="adultCount" name="num_adulti">
-                  <option value="1">1 Ospite</option>
-                  <option value="2">2 Ospiti</option>
-                  <option value="3">3 Ospiti</option>
-                  <option value="4">4 Ospiti</option>
-                  <option value="5">5 Ospiti</option>
-                  <option value="6">6 Ospiti</option>
-                </select>
+                <label for="rsvpName" class="form-label">Nome e Cognome *</label>
+                <input type="text" class="form-control" id="rsvpName" name="nome" required>
+                <div class="invalid-feedback">Inserisci nome e cognome.</div>
               </div>
               <div class="col-md-6">
-                <label for="childrenCount" class="form-label">Numero Bambini</label>
-                <select class="form-select" id="childrenCount" name="num_bambini">
-                  <option value="0" selected>Nessuno</option>
-                  <option value="1">1 Bambino</option>
-                  <option value="2">2 Bambini</option>
-                  <option value="3">3 Bambini</option>
-                  <option value="4">4 Bambini</option>
-                </select>
+                <label for="rsvpEmail" class="form-label">Email *</label>
+                <input type="email" class="form-control" id="rsvpEmail" name="email" required>
+                <div class="invalid-feedback">Inserisci un indirizzo email valido.</div>
+              </div>
+              <div class="col-md-12">
+                <label for="rsvpPhone" class="form-label">Telefono</label>
+                <input type="tel" class="form-control" id="rsvpPhone" name="telefono" placeholder="+39 ...">
               </div>
             </div>
 
-            <!-- Età bambini dinamica -->
-            <div id="childrenAgesContainer" class="row g-3 mt-1 d-none"></div>
+            <div class="my-4">
+              <span class="form-label d-block mb-3">Sarai con noi al matrimonio? *</span>
+              <div class="d-flex flex-column flex-sm-row gap-3">
+                <label class="attendance-radio flex-fill">
+                  <input type="radio" name="presenza" id="presenceYes" value="si" required>
+                  <div class="radio-box text-center p-3">
+                    <i class="bi bi-heart-fill d-block mb-2"></i>
+                    <span>Ci sarò con gioia!</span>
+                  </div>
+                </label>
+                <label class="attendance-radio flex-fill">
+                  <input type="radio" name="presenza" id="presenceNo" value="no" required>
+                  <div class="radio-box text-center p-3">
+                    <i class="bi bi-envelope-heart d-block mb-2"></i>
+                    <span>Purtroppo non potrò esserci</span>
+                  </div>
+                </label>
+              </div>
+            </div>
 
-            <!-- Ospiti Aggiuntivi Dinamici -->
-            <div class="mt-4">
-              <h5 class="h6 text-uppercase letter-spacing-1 mb-3 section-eyebrow">Altri Ospiti &amp; Esigenze Alimentari</h5>
-              <div id="guestsContainer"></div>
-              <button type="button" class="btn btn-sm btn-custom-ghost mt-2" id="btnAddGuest">
-                <i class="bi bi-plus-lg me-1"></i> Aggiungi Ospite
+            <!-- Sezione Presenza: SÌ -->
+            <div id="rsvpDetailsYes" class="d-none border-top pt-4 mt-4">
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label for="adultCount" class="form-label">Numero Adulti</label>
+                  <select class="form-select" id="adultCount" name="num_adulti">
+                    <option value="1">1 Ospite</option>
+                    <option value="2">2 Ospiti</option>
+                    <option value="3">3 Ospiti</option>
+                    <option value="4">4 Ospiti</option>
+                    <option value="5">5 Ospiti</option>
+                    <option value="6">6 Ospiti</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label for="childrenCount" class="form-label">Numero Bambini</label>
+                  <select class="form-select" id="childrenCount" name="num_bambini">
+                    <option value="0" selected>Nessuno</option>
+                    <option value="1">1 Bambino</option>
+                    <option value="2">2 Bambini</option>
+                    <option value="3">3 Bambini</option>
+                    <option value="4">4 Bambini</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Età bambini dinamica -->
+              <div id="childrenAgesContainer" class="row g-3 mt-1 d-none"></div>
+
+              <!-- Ospiti Aggiuntivi Dinamici -->
+              <div class="mt-4">
+                <h5 class="h6 text-uppercase letter-spacing-1 mb-3 section-eyebrow">Altri Ospiti &amp; Esigenze Alimentari</h5>
+                <div id="guestsContainer"></div>
+                <button type="button" class="btn btn-sm btn-custom-ghost mt-2" id="btnAddGuest">
+                  <i class="bi bi-plus-lg me-1"></i> Aggiungi Ospite
+                </button>
+              </div>
+
+              <div class="mt-4">
+                <label for="generalAllergies" class="form-label">Altre intolleranze o allergie da segnalare</label>
+                <textarea class="form-control" id="generalAllergies" name="intolleranze" rows="2" placeholder="Es. allergia ai crostacei per l'ospite principale..."></textarea>
+              </div>
+
+              <div class="form-check mt-3">
+                <input class="form-check-input" type="checkbox" id="needStay" name="pernottamento">
+                <label class="form-check-label" for="needStay">
+                  Ho bisogno di pernottamento in zona per la notte
+                </label>
+              </div>
+            </div>
+
+            <!-- Sezione Presenza: NO -->
+            <div id="rsvpDetailsNo" class="d-none border-top pt-4 mt-4">
+              <label for="declineMessage" class="form-label">Lascia un messaggio o un augurio per gli sposi</label>
+              <textarea class="form-control" id="declineMessage" name="messaggio_declino" rows="4" placeholder="Ci dispiace non essere presenti, vi auguriamo una meravigliosa vita insieme..."></textarea>
+            </div>
+
+            <div class="mt-4 text-center">
+              <button type="submit" class="btn btn-custom px-5 py-3 w-100" id="btnRsvpSubmit">
+                Invia Conferma
               </button>
             </div>
+          </form>
 
-            <div class="mt-4">
-              <label for="generalAllergies" class="form-label">Altre intolleranze o allergie da segnalare</label>
-              <textarea class="form-control" id="generalAllergies" name="intolleranze" rows="2" placeholder="Es. allergia ai crostacei per l'ospite principale..."></textarea>
-            </div>
-
-            <div class="form-check mt-3">
-              <input class="form-check-input" type="checkbox" id="needStay" name="pernottamento">
-              <label class="form-check-label" for="needStay">
-                Ho bisogno di pernottamento in zona per la notte
-              </label>
-            </div>
+          <div id="rsvpFeedback" class="alert rsvp-alert-success mt-4 d-none text-center" role="alert">
+            <i class="bi bi-check-circle-fill me-2"></i>
+            Grazie di cuore! La tua risposta è stata registrata con successo.
           </div>
+        </div>
+      </div>
+    </section>
 
-          <!-- Sezione Presenza: NO -->
-          <div id="rsvpDetailsNo" class="d-none border-top pt-4 mt-4">
-            <label for="declineMessage" class="form-label">Lascia un messaggio o un augurio per gli sposi</label>
-            <textarea class="form-control" id="declineMessage" name="messaggio_declino" rows="4" placeholder="Ci dispiace non essere presenti, vi auguriamo una meravigliosa vita insieme..."></textarea>
-          </div>
+    <!-- 10. LISTA NOZZE -->
+    <section id="regalo" class="section-padding bg-sand text-center">
+      <div class="container reveal">
+        <span class="section-eyebrow">Pensiero Speciale</span>
+        <h2 class="section-title">Lista Nozze</h2>
+        <div class="ornament">✦ · ✦ · ✦</div>
+        <p class="col-lg-6 mx-auto mt-3 mb-4">
+          Il dono più prezioso è festeggiare insieme a voi questo giorno. Se desiderate accompagnare i nostri primi passi e il nostro viaggio di nozze con un pensiero:
+        </p>
 
-          <div class="mt-4 text-center">
-            <button type="submit" class="btn btn-custom px-5 py-3 w-100" id="btnRsvpSubmit">
-              Invia Conferma
+        <div class="iban-card p-4 p-md-5 mx-auto shadow-sm rounded-2">
+          <span class="iban-label d-block text-uppercase mb-3">Coordinate Bancarie</span>
+          <div class="d-flex align-items-center justify-content-center flex-wrap gap-2 mb-2">
+            <code class="iban-code" id="ibanText">IT00 [X000] [0000] [0000] [0000] [0000] [000]</code>
+            <button class="btn btn-sm btn-custom-outline" id="btnCopyIban" aria-label="Copia codice IBAN">
+              <i class="bi bi-clipboard me-1" id="copyIcon"></i> <span id="copyText">Copia IBAN</span>
             </button>
           </div>
-        </form>
-
-        <div id="rsvpFeedback" class="alert rsvp-alert-success mt-4 d-none text-center" role="alert">
-          <i class="bi bi-check-circle-fill me-2"></i>
-          Grazie di cuore! La tua risposta è stata registrata con successo.
+          <p class="iban-holder mt-2 mb-0">Intestato a: <strong>Mirko &amp; Alessia</strong></p>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- 10. LISTA NOZZE -->
-  <section id="regalo" class="section-padding bg-sand text-center">
-    <div class="container reveal">
-      <span class="section-eyebrow">Pensiero Speciale</span>
-      <h2 class="section-title">Lista Nozze</h2>
-      <div class="ornament">✦ · ✦ · ✦</div>
-      <p class="col-lg-6 mx-auto mt-3 mb-4">
-        Il dono più prezioso è festeggiare insieme a voi questo giorno. Se desiderate accompagnare i nostri primi passi e il nostro viaggio di nozze con un pensiero:
-      </p>
-
-      <div class="iban-card p-4 p-md-5 mx-auto shadow-sm rounded-2">
-        <span class="iban-label d-block text-uppercase mb-3">Coordinate Bancarie</span>
-        <div class="d-flex align-items-center justify-content-center flex-wrap gap-2 mb-2">
-          <code class="iban-code" id="ibanText">IT00 [X000] [0000] [0000] [0000] [0000] [000]</code>
-          <button class="btn btn-sm btn-custom-outline" id="btnCopyIban" aria-label="Copia codice IBAN">
-            <i class="bi bi-clipboard me-1" id="copyIcon"></i> <span id="copyText">Copia IBAN</span>
-          </button>
+    <!-- 11. FOOTER -->
+    <footer class="footer-section text-center position-relative">
+      <div class="container">
+        <div class="footer-monogram mb-2">M &amp; A</div>
+        <h3 class="footer-names">Mirko &amp; Alessia</h3>
+        <p class="footer-meta text-uppercase">26 Maggio 2028 · Franciacorta, Brescia</p>
+        <p class="footer-hashtag">#[HASHTAG]</p>
+        <div class="footer-socials my-3">
+          <a href="[LINK_INSTAGRAM]" class="footer-social-link" target="_blank" rel="noopener noreferrer" aria-label="Instagram di Mirko e Alessia"><i class="bi bi-instagram"></i></a>
+          <a href="[LINK_FACEBOOK]" class="footer-social-link" target="_blank" rel="noopener noreferrer" aria-label="Facebook di Mirko e Alessia"><i class="bi bi-facebook"></i></a>
+          <a href="mailto:[EMAIL@SPOSI.IT]" class="footer-social-link" aria-label="Scrivi a Mirko e Alessia"><i class="bi bi-envelope"></i></a>
         </div>
-        <p class="iban-holder mt-2 mb-0">Intestato a: <strong>Mirko &amp; Alessia</strong></p>
+        <div class="footer-divider mx-auto my-3"></div>
+        <p class="footer-credit mb-0">Con profondo affetto per tutti i nostri cari</p>
       </div>
-    </div>
-  </section>
+    </footer>
 
-  <!-- 11. FOOTER -->
-  <footer class="footer-section text-center position-relative">
-    <div class="container">
-      <div class="footer-monogram mb-2">M &amp; A</div>
-      <h3 class="footer-names">Mirko &amp; Alessia</h3>
-      <p class="footer-meta text-uppercase">26 Maggio 2028 · Franciacorta, Brescia</p>
-      <p class="footer-hashtag">#[HASHTAG]</p>
-      <div class="footer-socials my-3">
-        <a href="[LINK_INSTAGRAM]" class="footer-social-link" target="_blank" rel="noopener noreferrer" aria-label="Instagram di Mirko e Alessia"><i class="bi bi-instagram"></i></a>
-        <a href="[LINK_FACEBOOK]" class="footer-social-link" target="_blank" rel="noopener noreferrer" aria-label="Facebook di Mirko e Alessia"><i class="bi bi-facebook"></i></a>
-        <a href="mailto:[EMAIL@SPOSI.IT]" class="footer-social-link" aria-label="Scrivi a Mirko e Alessia"><i class="bi bi-envelope"></i></a>
-      </div>
-      <div class="footer-divider mx-auto my-3"></div>
-      <p class="footer-credit mb-0">Con profondo affetto per tutti i nostri cari</p>
-    </div>
-  </footer>
+    <!-- Pulsante Ritorno in Alto -->
+    <button type="button" id="btnBackToTop" class="btn-back-to-top" aria-label="Torna in cima">
+      <i class="bi bi-arrow-up"></i>
+    </button>
 
-  <!-- Pulsante Ritorno in Alto -->
-  <button type="button" id="btnBackToTop" class="btn-back-to-top" aria-label="Torna in cima">
-    <i class="bi bi-arrow-up"></i>
-  </button>
+  </div><!-- /#siteContent -->
 
   <!-- Bootstrap 5.3 Bundle JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <!-- Script Applicazione Personalizzato (stessa cartella) -->
+  <!-- Script Applicazione Personalizzato -->
   <script src="script.js" defer></script>
 </body>
 </html>

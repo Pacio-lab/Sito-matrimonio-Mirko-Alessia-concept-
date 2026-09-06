@@ -8,82 +8,7 @@
 const ENDPOINT_RSVP = "";
 
 /**
- * 1. Generazione immagini SVG inline per garantire rendering visivo immediato
- * Crea dinamicamente i file SVG eleganti nella cartella virtuale / data-url
- */
-function initDynamicImages() {
-  const svgPalette = {
-    panna: "%23F5EFE7",
-    greige: "%23BFB0A0",
-    mocha: "%23A3805F",
-    cacao: "%237A5B44",
-    moro: "%233E2C22"
-  };
-
-  const createSvgDataUrl = (w, h, title, subtitle, patternType) => {
-    let deco = "";
-    if (patternType === "landscape") {
-      deco = `
-        <circle cx="${w * 0.7}" cy="${h * 0.4}" r="${Math.min(w, h) * 0.2}" fill="${svgPalette.mocha}" opacity="0.15"/>
-        <path d="M0,${h * 0.85} Q${w * 0.35},${h * 0.65} ${w * 0.7},${h * 0.8} T${w},${h * 0.75} L${w},${h} L0,${h} Z" fill="${svgPalette.greige}" opacity="0.3"/>
-        <path d="M0,${h * 0.9} Q${w * 0.5},${h * 0.75} ${w},${h * 0.85} L${w},${h} L0,${h} Z" fill="${svgPalette.cacao}" opacity="0.25"/>
-      `;
-    } else if (patternType === "detail") {
-      deco = `
-        <circle cx="${w / 2}" cy="${h / 2}" r="${Math.min(w, h) * 0.38}" fill="none" stroke="${svgPalette.greige}" stroke-width="1.5" stroke-dasharray="4 6" opacity="0.6"/>
-        <circle cx="${w / 2}" cy="${h / 2}" r="${Math.min(w, h) * 0.32}" fill="none" stroke="${svgPalette.mocha}" stroke-width="1" opacity="0.4"/>
-      `;
-    }
-
-    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">
-      <rect width="100%" height="100%" fill="${svgPalette.panna}"/>
-      <radialGradient id="g" cx="50%" cy="50%" r="70%">
-        <stop offset="0%" stop-color="${svgPalette.panna}"/>
-        <stop offset="100%" stop-color="${svgPalette.greige}" stop-opacity="0.35"/>
-      </radialGradient>
-      <rect width="100%" height="100%" fill="url(%23g)"/>
-      ${deco}
-      <text x="50%" y="47%" dominant-baseline="middle" text-anchor="middle" font-family="Georgia, serif" font-size="${Math.max(22, Math.round(w * 0.038))}px" fill="${svgPalette.moro}" letter-spacing="2">${title}</text>
-      <text x="50%" y="54%" dominant-baseline="middle" text-anchor="middle" font-family="'Courier New', monospace" font-size="${Math.max(12, Math.round(w * 0.016))}px" fill="${svgPalette.cacao}" letter-spacing="3">${subtitle}</text>
-    </svg>`;
-
-    return `data:image/svg+xml;utf8,${svg.replace(/\n/g, "").replace(/\s+/g, " ")}`;
-  };
-
-  // Imposta Hero Background
-  const heroDataUrl = createSvgDataUrl(2400, 1350, "Mirko &amp; Alessia", "FRANCIACORTA · 26 MAGGIO 2028", "landscape");
-  document.documentElement.style.setProperty("--hero-bg", `url("${heroDataUrl}")`);
-
-  // Assegna immagini reali a tag <img>
-  const imageMapping = {
-    "images/story-1.jpg": createSvgDataUrl(1200, 1500, "16 Aprile 2023", "L'INIZIO DEL NOSTRO AMORE", "detail"),
-    "images/story-2.jpg": createSvgDataUrl(1200, 1500, "Casa Insieme", "PROGETTI E QUOTIDIANITÀ", "detail"),
-    "images/solive-1.jpg": createSvgDataUrl(1600, 1000, "Agriturismo Solive", "VIGNETI &amp; ULIVI · NIGOLINE DI CORTE FRANCA", "landscape"),
-    "images/gallery-1.jpg": createSvgDataUrl(1200, 1200, "Vigneti al Tramonto", "FRANCIACORTA", "landscape"),
-    "images/gallery-2.jpg": createSvgDataUrl(1200, 1200, "Riva al Crepuscolo", "LAGO D'ISEO", "landscape"),
-    "images/gallery-3.jpg": createSvgDataUrl(1200, 1200, "Brindisi", "CALICI TRA GLI ULIVI", "detail"),
-    "images/gallery-4.jpg": createSvgDataUrl(1200, 1200, "Complici", "SORRISI SPONTANEI", "detail"),
-    "images/gallery-5.jpg": createSvgDataUrl(1200, 1200, "Colline Bresciane", "NATURA &amp; SILENZIO", "landscape"),
-    "images/gallery-6.jpg": createSvgDataUrl(1200, 1200, "Verso il Sì", "26 . 05 . 2028", "detail")
-  };
-
-  document.querySelectorAll("img").forEach((img) => {
-    const srcAttr = img.getAttribute("src");
-    if (imageMapping[srcAttr]) {
-      img.src = imageMapping[srcAttr];
-    }
-  });
-
-  document.querySelectorAll(".gallery-thumb").forEach((thumb) => {
-    const dataSrc = thumb.getAttribute("data-img-src");
-    if (imageMapping[dataSrc]) {
-      thumb.setAttribute("data-img-src", imageMapping[dataSrc]);
-    }
-  });
-}
-
-/**
- * 2. Countdown verso il 26 Maggio 2028 ore 16:00 (Inizio evento)
+ * 1. Countdown verso il 26 Maggio 2028 ore 16:00 (Inizio evento)
  */
 function initCountdown() {
   const targetDate = new Date("2028-05-26T16:00:00+02:00").getTime();
@@ -124,7 +49,7 @@ function initCountdown() {
 }
 
 /**
- * 3. Animazioni di scorrimento tramite IntersectionObserver
+ * 2. Animazioni di comparsa allo scorrimento (IntersectionObserver)
  */
 function initScrollReveal() {
   const reveals = document.querySelectorAll(".reveal");
@@ -152,7 +77,7 @@ function initScrollReveal() {
 }
 
 /**
- * 4. Galleria fotografica e Lightbox modale
+ * 3. Galleria fotografica e Lightbox modale
  */
 function initGallery() {
   const modalEl = document.getElementById("galleryModal");
@@ -185,7 +110,7 @@ function initGallery() {
 }
 
 /**
- * 5. Logica RSVP form: logica di conferma, campi dinamici e invio
+ * 4. Logica RSVP form: toggle sezioni, campi ripetibili e validazione
  */
 function initRsvpForm() {
   const form = document.getElementById("rsvpForm");
@@ -217,7 +142,6 @@ function initRsvpForm() {
   presenceYes.addEventListener("change", toggleAttendanceView);
   presenceNo.addEventListener("change", toggleAttendanceView);
 
-  // Selezione dinamica età bambini
   childrenSelect.addEventListener("change", (e) => {
     const count = parseInt(e.target.value, 10);
     childrenAgesContainer.innerHTML = "";
@@ -239,7 +163,6 @@ function initRsvpForm() {
     }
   });
 
-  // Aggiunta dinamica ospiti con intolleranze
   btnAddGuest.addEventListener("click", () => {
     guestCounter++;
     const card = document.createElement("div");
@@ -312,7 +235,6 @@ function initRsvpForm() {
     guestsContainer.appendChild(card);
   });
 
-  // Validazione ed invio
   form.addEventListener("submit", (event) => {
     event.preventDefault();
     event.stopPropagation();
@@ -338,7 +260,7 @@ function initRsvpForm() {
           if (res.ok) {
             mostraConferma();
           } else {
-            throw new Error("Errore durante la registrazione");
+            throw new Error("Errore invio");
           }
         })
         .catch(() => {
@@ -361,7 +283,7 @@ function initRsvpForm() {
 }
 
 /**
- * 6. Copia IBAN negli appunti
+ * 5. Copia IBAN negli appunti
  */
 function initCopyIban() {
   const btnCopy = document.getElementById("btnCopyIban");
@@ -389,10 +311,9 @@ function initCopyIban() {
 }
 
 /**
- * Inizializzazione globale
+ * Inizializzazione globale all'evento DOMContentLoaded
  */
 function init() {
-  initDynamicImages();
   initCountdown();
   initScrollReveal();
   initGallery();

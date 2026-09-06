@@ -1,4 +1,4 @@
-/* css/style.css */
+/* style.css */
 
 /* ==========================================================================
    1. VARIABILI E PALETTE (Mocha Mousse)
@@ -14,7 +14,8 @@
   --font-sans: 'Lato', system-ui, -apple-system, sans-serif;
   --font-eyebrow: 'Cinzel', serif;
 
-  --hero-bg: url('../images/hero.jpg');
+  /* Percorso esatto per style.css salvato nella cartella principale insieme a images/ */
+  --hero-bg: url('images/hero.jpg');
   --transition-smooth: cubic-bezier(0.25, 1, 0.5, 1);
   --transition-fast: cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -355,10 +356,6 @@ a:hover, a:focus-visible {
   gap: 5rem;
   max-width: 950px;
   margin: 0 auto;
-}
-
-.story-timeline-line {
-  display: none;
 }
 
 .story-item {

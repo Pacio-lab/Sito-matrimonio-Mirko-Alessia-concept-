@@ -14,7 +14,8 @@
   --font-sans: 'Lato', system-ui, -apple-system, sans-serif;
   --font-eyebrow: 'Cinzel', serif;
 
-  --hero-bg: url('../images/hero.jpg');
+  /* Hero SVG pre-generato */
+  --hero-bg: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='2400' height='1350' viewBox='0 0 2400 1350'><rect width='100%25' height='100%25' fill='%23F5EFE7'/><radialGradient id='hg' cx='50%25' cy='50%25' r='75%25'><stop offset='0%25' stop-color='%23F5EFE7'/><stop offset='100%25' stop-color='%23BFB0A0' stop-opacity='0.45'/></radialGradient><rect width='100%25' height='100%25' fill='url(%23hg)'/><circle cx='1700' cy='550' r='380' fill='%23A3805F' opacity='0.15'/><path d='M0,1100 Q800,880 1600,1050 T2400,980 L2400,1350 L0,1350 Z' fill='%23BFB0A0' opacity='0.35'/><path d='M0,1180 Q1000,950 2400,1100 L2400,1350 L0,1350 Z' fill='%237A5B44' opacity='0.25'/></svg>");
   --transition-smooth: cubic-bezier(0.25, 1, 0.5, 1);
 }
 
@@ -209,7 +210,7 @@ a:hover, a:focus-visible {
 
 .hero-content .hero-location {
   animation-delay: 0.8s;
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   font-style: italic;
   font-family: var(--font-serif);
   color: var(--greige);
@@ -336,7 +337,7 @@ a:hover, a:focus-visible {
 }
 
 /* ==========================================================================
-   7. PROGRAMMA
+   7. PROGRAMMA (Timeline Orizzontale / Verticale)
    ========================================================================== */
 .schedule-timeline {
   position: relative;

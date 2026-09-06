@@ -1,4 +1,4 @@
-// js/script.js
+// script.js
 
 /**
  * Configurazione Endpoint per la trasmissione dei dati del form RSVP.
@@ -164,7 +164,6 @@ function initRsvpForm() {
 
   let guestCounter = 0;
 
-  // Toggle logico Si / No con animazione discreta
   const toggleAttendanceView = () => {
     if (presenceYes.checked) {
       detailsYes.classList.remove("d-none");
@@ -178,7 +177,6 @@ function initRsvpForm() {
   presenceYes.addEventListener("change", toggleAttendanceView);
   presenceNo.addEventListener("change", toggleAttendanceView);
 
-  // Gestione dinamica età bambini
   childrenSelect.addEventListener("change", (e) => {
     const count = parseInt(e.target.value, 10);
     childrenAgesContainer.innerHTML = "";
@@ -200,7 +198,6 @@ function initRsvpForm() {
     }
   });
 
-  // Aggiunta dinamica blocco ospiti aggiuntivi con preferenze dietetiche
   btnAddGuest.addEventListener("click", () => {
     guestCounter++;
     const card = document.createElement("div");
@@ -273,7 +270,6 @@ function initRsvpForm() {
     guestsContainer.appendChild(card);
   });
 
-  // Validazione ed invio asincrono
   form.addEventListener("submit", (event) => {
     event.preventDefault();
     event.stopPropagation();
@@ -308,7 +304,6 @@ function initRsvpForm() {
           alert("Si è verificato un errore durante l'invio. Riprova più tardi.");
         });
     } else {
-      // Mockup con feedback visivo naturale
       setTimeout(() => {
         mostraConferma();
       }, 600);
@@ -323,7 +318,7 @@ function initRsvpForm() {
 }
 
 /**
- * 6. Copia IBAN negli appunti con feedback visivo moderno
+ * 6. Copia IBAN negli appunti
  */
 function initCopyIban() {
   const btnCopy = document.getElementById("btnCopyIban");
@@ -351,7 +346,7 @@ function initCopyIban() {
 }
 
 /**
- * Inizializzazione di tutti i moduli al caricamento completo del DOM
+ * Inizializzazione moduli
  */
 function init() {
   initScrollIndicator();

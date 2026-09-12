@@ -7,16 +7,35 @@
   <title>Mirko & Alessia — 26 Maggio 2028</title>
 
   <!-- SEO & Open Graph -->
-  <meta name="description" content="Partecipazione di nozze di Mirko e Alessia. Sabato 26 maggio 2028, ore 16:00, presso Agriturismo Solive, Franciacorta.">
-  <meta property="og:title" content="Mirko & Alessia — 26 Maggio 2028">
+  <meta name="description" content="Partecipazione di nozze di Mirko e Alessia. Venerdì 26 maggio 2028, ore 16:00, presso Agriturismo Solive, Franciacorta.">
+  <meta name="theme-color" content="#3E2C22">
+
+  <!-- IMPORTANTE: sostituire il dominio qui sotto con quello definitivo.
+       Le anteprime di WhatsApp/Facebook richiedono URL assoluti: con un
+       percorso relativo l'immagine non viene mai mostrata. -->
+  <meta property="og:url" content="https://www.mirkoealessia.it/">
+  <meta property="og:site_name" content="Mirko &amp; Alessia">
+  <meta property="og:locale" content="it_IT">
+  <meta property="og:title" content="Mirko &amp; Alessia — 26 Maggio 2028">
   <meta property="og:description" content="Rito civile, ricevimento e festa presso l'Agriturismo Solive in Franciacorta.">
-  <meta property="og:image" content="images/hero.jpg">
+  <meta property="og:image" content="https://www.mirkoealessia.it/images/hero.jpg">
+  <meta property="og:image:width" content="2000">
+  <meta property="og:image:height" content="1116">
+  <meta property="og:image:alt" content="Vigneti della Franciacorta al tramonto">
   <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- Favicon monogramma, inline: nessuna richiesta di rete aggiuntiva -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%233E2C22'/%3E%3Ctext x='32' y='42' font-family='Georgia,serif' font-size='26' fill='%23F5EFE7' text-anchor='middle'%3EM%26amp;A%3C/text%3E%3C/svg%3E">
 
   <!-- Google Fonts: Cormorant Garamond, Great Vibes, Cinzel, Lato -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Great+Vibes&family=Lato:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet">
+
+  <!-- L'immagine di apertura e' l'elemento piu' grande della pagina (LCP):
+       la si chiede al browser subito, senza aspettare il CSS. -->
+  <link rel="preload" as="image" href="images/hero.jpg" fetchpriority="high">
 
   <!-- Bootstrap 5.3 CSS & Bootstrap Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -26,6 +45,19 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body class="envelope-locked">
+
+  <!-- Se JavaScript e' disattivato la busta non si puo' aprire: qui la si salta
+       del tutto, cosi' l'invito resta comunque leggibile. -->
+  <noscript>
+    <style>
+      body.envelope-locked { overflow: auto; height: auto; }
+      .sisempre-envelope-screen { display: none; }
+      .site-content { opacity: 1; }
+      .site-nav { transform: none; }
+    </style>
+  </noscript>
+
+  <a href="#hero" class="skip-link">Vai al contenuto</a>
 
   <!-- INTRO BUSTA REALISTICA FULLSCREEN (Stile SiSempre) -->
   <div id="envelopeScreen" class="sisempre-envelope-screen">
@@ -123,7 +155,7 @@
 
       <!-- Scritta Nomi Sposi in Corsivo Elegante & Bottone Pillola Trasparente -->
       <div class="sisempre-footer-action" id="envelopeFooter">
-        <h1 class="sisempre-script-names">Mirko &amp; Alessia</h1>
+        <p class="sisempre-script-names" aria-hidden="true">Mirko &amp; Alessia</p>
         <button type="button" class="sisempre-pill-btn" id="btnOpenPill" aria-label="Tocca per aprire">
           Tocca per aprire
         </button>
@@ -135,17 +167,45 @@
   <!-- Barra di Progresso Lettura Top -->
   <div id="scrollProgress" class="scroll-progress-bar" role="progressbar" aria-label="Progresso pagina" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
 
+  <!-- Menu di navigazione: compare quando si supera la hero -->
+  <nav id="mainNav" class="site-nav" aria-label="Navigazione principale">
+    <div class="container site-nav-inner">
+      <a href="#hero" class="site-nav-brand">M &amp; A</a>
+      <button class="site-nav-toggle d-lg-none" type="button" data-bs-toggle="collapse"
+              data-bs-target="#navLinks" aria-controls="navLinks" aria-expanded="false"
+              aria-label="Apri il menu di navigazione">
+        <i class="bi bi-list"></i>
+      </button>
+      <div class="collapse site-nav-menu" id="navLinks">
+        <ul class="site-nav-list">
+          <li><a href="#storia">Storia</a></li>
+          <li><a href="#dove">Location</a></li>
+          <li><a href="#programma">Programma</a></li>
+          <li><a href="#dresscode">Dress code</a></li>
+          <li><a href="#galleria">Galleria</a></li>
+          <li><a href="#info">Info</a></li>
+          <li><a href="#rsvp" class="site-nav-cta">Conferma</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
   <!-- SITO VERO E PROPRIO (Rivelato dopo l'apertura) -->
   <main id="siteContent" class="site-content">
     
     <!-- 1. HERO -->
     <header id="hero" class="hero-section position-relative overflow-hidden text-center d-flex align-items-center justify-content-center">
-      <div class="hero-bg-media"></div>
+      <!-- Per cambiare l'immagine di apertura basta sostituire images/hero.jpg
+           (formato orizzontale, almeno 2000px di larghezza) e rilanciare
+           tools/ottimizza-immagini.py. Aggiornare width/height qui sotto e i
+           meta og:image nel <head> se cambiano le proporzioni. -->
+      <img src="images/hero.jpg" alt="" width="2000" height="1116"
+           fetchpriority="high" decoding="async" class="hero-bg-media">
       <div class="hero-overlay"></div>
       <div class="hero-content container position-relative z-2 text-light">
         <p class="hero-eyebrow text-uppercase mb-3">Ci sposiamo</p>
         <div class="hero-monogram mb-2">M &amp; A</div>
-        <h2 class="hero-title my-2">Mirko &amp; Alessia</h2>
+        <h1 class="hero-title my-2">Mirko &amp; Alessia</h1>
         <div class="hero-divider-line mx-auto my-3"></div>
         <p class="hero-date text-uppercase my-2">26 . 05 . 2028</p>
         <p class="hero-location mb-0">Ore 16:00 · Franciacorta, Brescia</p>
@@ -163,7 +223,7 @@
         <h2 class="section-title">Contiamo i Giorni</h2>
         <div class="ornament">✦ · ✦ · ✦</div>
         <p class="section-intro mx-auto mt-3">Ogni istante ci avvicina al momento in cui ci scambieremo le nostre promesse.</p>
-        <div class="row justify-content-center g-3 g-md-4 mt-4" id="countdown-clock">
+        <div class="row justify-content-center g-3 g-md-4 mt-4" id="countdown-clock" role="timer" aria-live="off">
           <div class="col-6 col-sm-3 col-md-2">
             <div class="counter-card p-3 p-md-4">
               <span class="counter-val display-5" id="cd-days">00</span>
@@ -188,6 +248,12 @@
               <span class="counter-lbl">Secondi</span>
             </div>
           </div>
+        </div>
+        <p id="countdown-done" class="countdown-done d-none">Oggi ci sposiamo. Grazie di essere qui.</p>
+        <div class="mt-4">
+          <button type="button" class="btn btn-custom-outline" id="btnAddCalendar">
+            <i class="bi bi-calendar-heart me-1"></i> Aggiungi al calendario
+          </button>
         </div>
       </div>
     </section>
@@ -215,7 +281,7 @@
             <div class="story-media">
               <div class="story-img-wrap">
                 <!-- Dimensioni previste: 1200x1500 -->
-                <img src="images/story-1.jpg" alt="Mirko e Alessia, 16 aprile 2023" loading="lazy" class="img-fluid rounded-1 shadow-sm">
+                <img src="images/story-1.jpg" alt="Mirko e Alessia, 16 aprile 2023" width="967" height="1200" loading="lazy" decoding="async" class="img-fluid rounded-1 shadow-sm">
               </div>
             </div>
           </div>
@@ -230,7 +296,7 @@
             <div class="story-media">
               <div class="story-img-wrap">
                 <!-- Dimensioni previste: 1200x1500 -->
-                <img src="images/story-2.jpg" alt="Mirko e Alessia nella loro vita insieme" loading="lazy" class="img-fluid rounded-1 shadow-sm">
+                <img src="images/story-2.jpg" alt="Mirko e Alessia nella loro vita insieme" width="967" height="1200" loading="lazy" decoding="async" class="img-fluid rounded-1 shadow-sm">
               </div>
             </div>
           </div>
@@ -282,7 +348,7 @@
             <div class="col-lg-6">
               <div class="location-img-wrap h-100">
                 <!-- Dimensioni previste: 1600x1000 -->
-                <img src="images/solive-1.jpg" alt="Vista panoramica di Agriturismo Solive in Franciacorta" loading="lazy" class="img-fluid h-100 object-fit-cover w-100">
+                <img src="images/solive-1.jpg" alt="Vista panoramica di Agriturismo Solive in Franciacorta" width="1600" height="995" loading="lazy" decoding="async" class="img-fluid h-100 object-fit-cover w-100">
               </div>
             </div>
             <div class="col-lg-6 d-flex align-items-center">
@@ -297,7 +363,7 @@
                   <strong>Zero spostamenti:</strong> Il rito civile, l'aperitivo, la cena e il party fino a notte fonda si terranno interamente nella stessa struttura.
                 </div>
                 <p class="location-detail mb-2"><i class="bi bi-pin-map-fill me-2"></i>Via Calvarole 15, 25030 Nigoline di Corte Franca (BS)</p>
-                <p class="location-detail mb-4"><i class="bi bi-telephone-fill me-2"></i>+39 030 988 4201</p>
+                <p class="location-detail mb-4"><i class="bi bi-telephone-fill me-2"></i><a href="tel:+390309884201">+39 030 988 4201</a></p>
                 <div class="d-flex flex-wrap gap-2">
                   <a href="https://maps.google.com/?q=Agriturismo+Solive+Corte+Franca" target="_blank" rel="noopener noreferrer" class="btn btn-custom-outline">
                     <i class="bi bi-map me-1"></i> Apri in Maps
@@ -440,40 +506,40 @@
 
         <div class="row g-3 g-md-4">
           <div class="col-6 col-md-4">
-            <div class="gallery-thumb rounded-1 shadow-sm" role="button" tabindex="0" data-img-src="images/gallery-1.jpg" data-caption="Passeggiata tra le vigne al tramonto">
-              <img src="images/gallery-1.jpg" alt="Mirko e Alessia durante una passeggiata tra i vigneti" loading="lazy" class="img-fluid w-100 h-100 object-fit-cover">
-              <div class="gallery-thumb-overlay"><i class="bi bi-arrows-angle-expand"></i></div>
-            </div>
+            <button type="button" class="gallery-thumb rounded-1 shadow-sm" data-img-src="images/gallery-1.jpg" data-caption="Passeggiata tra le vigne al tramonto">
+              <img src="images/gallery-1.jpg" alt="Mirko e Alessia durante una passeggiata tra i vigneti" width="1400" height="1400" loading="lazy" decoding="async" class="img-fluid w-100 h-100 object-fit-cover">
+              <span class="gallery-thumb-overlay"><i class="bi bi-arrows-angle-expand"></i></span>
+            </button>
           </div>
           <div class="col-6 col-md-4">
-            <div class="gallery-thumb rounded-1 shadow-sm" role="button" tabindex="0" data-img-src="images/gallery-2.jpg" data-caption="Lago d'Iseo al crepuscolo">
-              <img src="images/gallery-2.jpg" alt="Tramonto romantico sul Lago d'Iseo" loading="lazy" class="img-fluid w-100 h-100 object-fit-cover">
-              <div class="gallery-thumb-overlay"><i class="bi bi-arrows-angle-expand"></i></div>
-            </div>
+            <button type="button" class="gallery-thumb rounded-1 shadow-sm" data-img-src="images/gallery-2.jpg" data-caption="Lago d'Iseo al crepuscolo">
+              <img src="images/gallery-2.jpg" alt="Tramonto romantico sul Lago d'Iseo" width="1400" height="1400" loading="lazy" decoding="async" class="img-fluid w-100 h-100 object-fit-cover">
+              <span class="gallery-thumb-overlay"><i class="bi bi-arrows-angle-expand"></i></span>
+            </button>
           </div>
           <div class="col-6 col-md-4">
-            <div class="gallery-thumb rounded-1 shadow-sm" role="button" tabindex="0" data-img-src="images/gallery-3.jpg" data-caption="Calici e brindisi sotto gli ulivi">
-              <img src="images/gallery-3.jpg" alt="Dettaglio di calici di Franciacorta" loading="lazy" class="img-fluid w-100 h-100 object-fit-cover">
-              <div class="gallery-thumb-overlay"><i class="bi bi-arrows-angle-expand"></i></div>
-            </div>
+            <button type="button" class="gallery-thumb rounded-1 shadow-sm" data-img-src="images/gallery-3.jpg" data-caption="Calici e brindisi sotto gli ulivi">
+              <img src="images/gallery-3.jpg" alt="Dettaglio di calici di Franciacorta" width="1400" height="1400" loading="lazy" decoding="async" class="img-fluid w-100 h-100 object-fit-cover">
+              <span class="gallery-thumb-overlay"><i class="bi bi-arrows-angle-expand"></i></span>
+            </button>
           </div>
           <div class="col-6 col-md-4">
-            <div class="gallery-thumb rounded-1 shadow-sm" role="button" tabindex="0" data-img-src="images/gallery-4.jpg" data-caption="Sorrisi e sguardi complici">
-              <img src="images/gallery-4.jpg" alt="Ritratto spontaneo di Mirko e Alessia" loading="lazy" class="img-fluid w-100 h-100 object-fit-cover">
-              <div class="gallery-thumb-overlay"><i class="bi bi-arrows-angle-expand"></i></div>
-            </div>
+            <button type="button" class="gallery-thumb rounded-1 shadow-sm" data-img-src="images/gallery-4.jpg" data-caption="Sorrisi e sguardi complici">
+              <img src="images/gallery-4.jpg" alt="Ritratto spontaneo di Mirko e Alessia" width="1400" height="1400" loading="lazy" decoding="async" class="img-fluid w-100 h-100 object-fit-cover">
+              <span class="gallery-thumb-overlay"><i class="bi bi-arrows-angle-expand"></i></span>
+            </button>
           </div>
           <div class="col-6 col-md-4">
-            <div class="gallery-thumb rounded-1 shadow-sm" role="button" tabindex="0" data-img-src="images/gallery-5.jpg" data-caption="Panorama sulla Franciacorta">
-              <img src="images/gallery-5.jpg" alt="Scorcio panoramico della campagna bresciana" loading="lazy" class="img-fluid w-100 h-100 object-fit-cover">
-              <div class="gallery-thumb-overlay"><i class="bi bi-arrows-angle-expand"></i></div>
-            </div>
+            <button type="button" class="gallery-thumb rounded-1 shadow-sm" data-img-src="images/gallery-5.jpg" data-caption="Panorama sulla Franciacorta">
+              <img src="images/gallery-5.jpg" alt="Scorcio panoramico della campagna bresciana" width="1400" height="1400" loading="lazy" decoding="async" class="img-fluid w-100 h-100 object-fit-cover">
+              <span class="gallery-thumb-overlay"><i class="bi bi-arrows-angle-expand"></i></span>
+            </button>
           </div>
           <div class="col-6 col-md-4">
-            <div class="gallery-thumb rounded-1 shadow-sm" role="button" tabindex="0" data-img-src="images/gallery-6.jpg" data-caption="Un passo verso il nostro 26 Maggio">
-              <img src="images/gallery-6.jpg" alt="Mani intrecciate con anello in primo piano" loading="lazy" class="img-fluid w-100 h-100 object-fit-cover">
-              <div class="gallery-thumb-overlay"><i class="bi bi-arrows-angle-expand"></i></div>
-            </div>
+            <button type="button" class="gallery-thumb rounded-1 shadow-sm" data-img-src="images/gallery-6.jpg" data-caption="Un passo verso il nostro 26 Maggio">
+              <img src="images/gallery-6.jpg" alt="Mani intrecciate con anello in primo piano" width="1400" height="1400" loading="lazy" decoding="async" class="img-fluid w-100 h-100 object-fit-cover">
+              <span class="gallery-thumb-overlay"><i class="bi bi-arrows-angle-expand"></i></span>
+            </button>
           </div>
         </div>
       </div>
@@ -573,20 +639,26 @@
 
         <div class="rsvp-wrapper mx-auto p-4 p-md-5 rounded-2 shadow-sm bg-sand">
           <form id="rsvpForm" novalidate>
+            <!-- Trappola anti-spam: invisibile agli invitati, compilata dai bot -->
+            <div class="rsvp-honeypot" aria-hidden="true">
+              <label for="rsvpWebsite">Non compilare questo campo</label>
+              <input type="text" id="rsvpWebsite" name="sito_web" tabindex="-1" autocomplete="off">
+            </div>
+
             <div class="row g-3">
               <div class="col-md-6">
                 <label for="rsvpName" class="form-label">Nome e Cognome *</label>
-                <input type="text" class="form-control" id="rsvpName" name="nome" required>
+                <input type="text" class="form-control" id="rsvpName" name="nome" autocomplete="name" required>
                 <div class="invalid-feedback">Inserisci nome e cognome.</div>
               </div>
               <div class="col-md-6">
                 <label for="rsvpEmail" class="form-label">Email *</label>
-                <input type="email" class="form-control" id="rsvpEmail" name="email" required>
+                <input type="email" class="form-control" id="rsvpEmail" name="email" autocomplete="email" required>
                 <div class="invalid-feedback">Inserisci un indirizzo email valido.</div>
               </div>
               <div class="col-md-12">
                 <label for="rsvpPhone" class="form-label">Telefono</label>
-                <input type="tel" class="form-control" id="rsvpPhone" name="telefono" placeholder="+39 ...">
+                <input type="tel" class="form-control" id="rsvpPhone" name="telefono" autocomplete="tel" placeholder="+39 ...">
               </div>
             </div>
 
@@ -607,6 +679,9 @@
                     <span>Purtroppo non potrò esserci</span>
                   </div>
                 </label>
+              </div>
+              <div class="attendance-feedback d-none" id="presenceFeedback" role="alert">
+                Seleziona se potrai essere dei nostri.
               </div>
             </div>
 
@@ -671,12 +746,26 @@
               <button type="submit" class="btn btn-custom px-5 py-3 w-100" id="btnRsvpSubmit">
                 Invia Conferma
               </button>
+              <p class="rsvp-privacy mt-3 mb-0">
+                I dati che ci lasci servono solo a organizzare la giornata e non verranno
+                condivisi con nessun altro.
+              </p>
             </div>
           </form>
 
-          <div id="rsvpFeedback" class="alert rsvp-alert-success mt-4 d-none text-center" role="alert">
+          <div id="rsvpFeedback" class="alert rsvp-alert-success mt-4 d-none text-center" role="status">
             <i class="bi bi-check-circle-fill me-2"></i>
             Grazie di cuore! La tua risposta è stata registrata con successo.
+          </div>
+
+          <!-- Mostrato quando ENDPOINT_RSVP non e' ancora configurato in script.js:
+               senza destinatario le risposte andrebbero perse in silenzio. -->
+          <div id="rsvpNotConfigured" class="alert rsvp-alert-warning mt-4 d-none" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+            <strong>Modulo non ancora attivo.</strong> Prima di inviare l'invito agli ospiti
+            va inserito un endpoint (Formspree, Google Form o simili) nella costante
+            <code>ENDPOINT_RSVP</code> in <code>script.js</code>, altrimenti le conferme
+            non arrivano a nessuno.
           </div>
         </div>
       </div>
@@ -705,7 +794,10 @@
       </div>
     </section>
 
-    <!-- 11. FOOTER -->
+  </main><!-- /#siteContent -->
+
+  <!-- 11. FOOTER -->
+  <div class="site-content">
     <footer class="footer-section text-center position-relative">
       <div class="container">
         <div class="footer-monogram mb-2">M &amp; A</div>
@@ -721,13 +813,12 @@
         <p class="footer-credit mb-0">Con profondo affetto per tutti i nostri cari</p>
       </div>
     </footer>
+  </div>
 
-    <!-- Pulsante Ritorno in Alto -->
-    <button type="button" id="btnBackToTop" class="btn-back-to-top" aria-label="Torna in cima">
-      <i class="bi bi-arrow-up"></i>
-    </button>
-
-  </main><!-- /#siteContent -->
+  <!-- Pulsante Ritorno in Alto -->
+  <button type="button" id="btnBackToTop" class="btn-back-to-top" aria-label="Torna in cima">
+    <i class="bi bi-arrow-up"></i>
+  </button>
 
   <!-- Bootstrap 5.3 Bundle JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

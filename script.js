@@ -4,8 +4,15 @@
  * Configurazione Endpoint per la trasmissione dei dati del form RSVP.
  * Inserire qui l'endpoint di Formspree (es. "https://formspree.io/f/XXXXX")
  * o il Webhook / Google Script deputato alla ricezione.
+ *
+ * Finche' resta vuoto il modulo NON invia nulla e mostra un avviso esplicito:
+ * meglio un avviso che una falsa conferma con la risposta persa.
  */
 const ENDPOINT_RSVP = "";
+
+/** Data e ora del matrimonio, usate da countdown e file calendario. */
+const DATA_MATRIMONIO_INIZIO = "2028-05-26T16:00:00+02:00";
+const DATA_MATRIMONIO_FINE = "2028-05-27T02:00:00+02:00";
 
 /**
  * 1. Apertura interattiva Busta in stile SiSempre (Immagine 2)
@@ -15,38 +22,96 @@ function initEnvelopeIntro() {
   const btnPill = document.getElementById("btnOpenPill");
   const envelopeStage = document.querySelector(".sisempre-envelope-stage");
   const envelopeScreen = document.getElementById("envelopeScreen");
+  const siteContent = document.getElementById("siteContent");
 
   if (!envelopeScreen) return;
 
+  const CHIAVE_SESSIONE = "invito-gia-aperto";
+
+  const sbloccaSito = () => {
+    envelopeScreen.classList.add("opened");
+    envelopeScreen.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("envelope-locked");
+    try {
+      sessionStorage.setItem(CHIAVE_SESSIONE, "1");
+    } catch (e) {
+      /* navigazione privata o storage bloccato: pazienza, l'intro si ripete */
+    }
+  };
+
+  // Chi arriva da un link diretto a una sezione (es. .../#rsvp) o chi ha gia'
+  // aperto la busta in questa sessione non deve rivedere l'animazione.
+  let giaAperto = false;
+  try {
+    giaAperto = sessionStorage.getItem(CHIAVE_SESSIONE) === "1";
+  } catch (e) {
+    giaAperto = false;
+  }
+  const arrivaDaAncora = window.location.hash && window.location.hash !== "#hero";
+
+  if (giaAperto || arrivaDaAncora) {
+    envelopeScreen.style.transition = "none";
+    sbloccaSito();
+    return;
+  }
+
+  let inApertura = false;
+
   const handleOpen = () => {
+    if (inApertura) return;
+    inApertura = true;
+
     if (envelopeStage) {
       envelopeStage.classList.add("anim-opening");
     }
 
-    // Effetto sonoro o animazione apertura
-    setTimeout(() => {
-      envelopeScreen.classList.add("opened");
-      document.body.classList.remove("envelope-locked");
+    const motoRidotto = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-      // Ricalcola lo scroll e avvia IntersectionObserver
+    setTimeout(() => {
+      sbloccaSito();
+
+      // Il focus segue il contenuto appena rivelato, altrimenti chi naviga da
+      // tastiera resterebbe fermo su un bottone ormai invisibile.
+      if (siteContent) {
+        siteContent.setAttribute("tabindex", "-1");
+        siteContent.focus({ preventScroll: true });
+      }
+
       setTimeout(() => {
         window.dispatchEvent(new Event("scroll"));
       }, 250);
-    }, 900);
+    }, motoRidotto ? 0 : 900);
   };
 
   if (btnSeal) btnSeal.addEventListener("click", handleOpen);
   if (btnPill) btnPill.addEventListener("click", handleOpen);
+
+  // Invio o Esc aprono comunque l'invito, senza dover centrare il sigillo.
+  document.addEventListener("keydown", (e) => {
+    if (document.body.classList.contains("envelope-locked") && (e.key === "Escape" || e.key === "Enter")) {
+      handleOpen();
+    }
+  });
 }
 
 /**
- * 2. Indicatore di Progresso Scorrimento & Pulsante Ritorno in Cima
+ * 2. Indicatore di Progresso Scorrimento, Navigazione e Ritorno in Cima
  */
 function initScrollIndicator() {
   const progressBar = document.getElementById("scrollProgress");
   const backToTopBtn = document.getElementById("btnBackToTop");
+  const nav = document.getElementById("mainNav");
+  const heroSection = document.getElementById("hero");
+  const navLinks = Array.from(document.querySelectorAll(".site-nav-list a"));
+  const sezioni = navLinks
+    .map((link) => document.querySelector(link.getAttribute("href")))
+    .filter(Boolean);
 
-  const onScroll = () => {
+  let inAttesaDiFrame = false;
+
+  const aggiorna = () => {
+    inAttesaDiFrame = false;
+
     const scrollTop = window.scrollY || document.documentElement.scrollTop;
     const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
     const scrollPercent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
@@ -57,19 +122,58 @@ function initScrollIndicator() {
     }
 
     if (backToTopBtn) {
-      if (scrollTop > 450) {
-        backToTopBtn.classList.add("show");
-      } else {
-        backToTopBtn.classList.remove("show");
+      backToTopBtn.classList.toggle("show", scrollTop > 450);
+    }
+
+    // La barra di navigazione compare solo dopo la hero, per non coprirla.
+    if (nav) {
+      const sogliaNav = heroSection ? heroSection.offsetHeight * 0.75 : 500;
+      nav.classList.toggle("is-visible", scrollTop > sogliaNav);
+    }
+
+    // Evidenzia la voce di menu della sezione che si sta leggendo.
+    if (sezioni.length) {
+      let attiva = null;
+      for (const sezione of sezioni) {
+        if (sezione.getBoundingClientRect().top <= 140) {
+          attiva = sezione;
+        }
       }
+      navLinks.forEach((link) => {
+        const bersaglio = link.getAttribute("href").slice(1);
+        link.classList.toggle("is-active", Boolean(attiva) && attiva.id === bersaglio);
+      });
+    }
+  };
+
+  // Lo scroll puo' scattare decine di volte al secondo: si lavora una volta
+  // per frame, cosi' lo scorrimento resta fluido anche su telefoni lenti.
+  const onScroll = () => {
+    if (!inAttesaDiFrame) {
+      inAttesaDiFrame = true;
+      window.requestAnimationFrame(aggiorna);
     }
   };
 
   window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", onScroll, { passive: true });
+  aggiorna();
 
   if (backToTopBtn) {
     backToTopBtn.addEventListener("click", () => {
       window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  }
+
+  // Su mobile il menu si richiude dopo aver scelto una sezione.
+  const menu = document.getElementById("navLinks");
+  if (menu && window.bootstrap) {
+    navLinks.forEach((link) => {
+      link.addEventListener("click", () => {
+        if (menu.classList.contains("show")) {
+          bootstrap.Collapse.getOrCreateInstance(menu).hide();
+        }
+      });
     });
   }
 }
@@ -78,25 +182,25 @@ function initScrollIndicator() {
  * 3. Countdown live al 26 Maggio 2028 ore 16:00 (Europe/Rome)
  */
 function initCountdown() {
-  const targetDate = new Date("2028-05-26T16:00:00+02:00").getTime();
+  const targetDate = new Date(DATA_MATRIMONIO_INIZIO).getTime();
 
   const daysElem = document.getElementById("cd-days");
   const hoursElem = document.getElementById("cd-hours");
   const minutesElem = document.getElementById("cd-minutes");
   const secondsElem = document.getElementById("cd-seconds");
+  const clockElem = document.getElementById("countdown-clock");
+  const doneElem = document.getElementById("countdown-done");
 
   if (!daysElem || !hoursElem || !minutesElem || !secondsElem) return;
 
   const updateClock = () => {
-    const now = new Date().getTime();
-    const difference = targetDate - now;
+    const difference = targetDate - Date.now();
 
     if (difference <= 0) {
-      daysElem.textContent = "00";
-      hoursElem.textContent = "00";
-      minutesElem.textContent = "00";
-      secondsElem.textContent = "00";
       clearInterval(timerInterval);
+      // A conto terminato quattro zeri sembrano un errore: meglio un saluto.
+      if (clockElem) clockElem.classList.add("d-none");
+      if (doneElem) doneElem.classList.remove("d-none");
       return;
     }
 
@@ -148,7 +252,7 @@ function initScrollReveal() {
  */
 function initGallery() {
   const modalEl = document.getElementById("galleryModal");
-  if (!modalEl) return;
+  if (!modalEl || !window.bootstrap) return;
 
   const bsModal = new bootstrap.Modal(modalEl);
   const lightboxImg = document.getElementById("lightboxImg");
@@ -156,22 +260,18 @@ function initGallery() {
   const thumbs = document.querySelectorAll(".gallery-thumb");
 
   thumbs.forEach((thumb) => {
-    const openLightbox = () => {
+    // Le miniature sono <button>: Invio e Spazio funzionano gia' da soli.
+    thumb.addEventListener("click", () => {
       const src = thumb.getAttribute("data-img-src");
       const caption = thumb.getAttribute("data-caption");
-      if (src && lightboxImg) {
-        lightboxImg.src = src;
-        lightboxCaption.textContent = caption || "";
-        bsModal.show();
-      }
-    };
+      const immagine = thumb.querySelector("img");
+      if (!src || !lightboxImg) return;
 
-    thumb.addEventListener("click", openLightbox);
-    thumb.addEventListener("keydown", (e) => {
-      if (e.key === "Enter" || e.key === " ") {
-        e.preventDefault();
-        openLightbox();
-      }
+      lightboxImg.src = src;
+      // L'alternativa testuale deve descrivere la foto aperta, non restare fissa.
+      lightboxImg.alt = immagine ? immagine.alt : caption || "";
+      lightboxCaption.textContent = caption || "";
+      bsModal.show();
     });
   });
 }
@@ -190,24 +290,41 @@ function initRsvpForm() {
   const btnAddGuest = document.getElementById("btnAddGuest");
   const guestsContainer = document.getElementById("guestsContainer");
   const feedbackAlert = document.getElementById("rsvpFeedback");
+  const notConfiguredAlert = document.getElementById("rsvpNotConfigured");
+  const presenceFeedback = document.getElementById("presenceFeedback");
   const submitBtn = document.getElementById("btnRsvpSubmit");
+  const honeypot = document.getElementById("rsvpWebsite");
 
   if (!form) return;
 
   let guestCounter = 0;
 
+  /**
+   * Un campo obbligatorio dentro una sezione nascosta blocca l'invio senza che
+   * il browser possa mostrare l'errore (l'elemento non e' raggiungibile): il
+   * modulo sembra semplicemente non rispondere. Disattivando i campi nascosti
+   * la validazione li ignora e non finiscono nemmeno nei dati inviati.
+   */
+  const attivaSezione = (sezione, attiva) => {
+    if (!sezione) return;
+    sezione.classList.toggle("d-none", !attiva);
+    sezione.querySelectorAll("input, select, textarea").forEach((campo) => {
+      campo.disabled = !attiva;
+    });
+  };
+
   const toggleAttendanceView = () => {
-    if (presenceYes.checked) {
-      detailsYes.classList.remove("d-none");
-      detailsNo.classList.add("d-none");
-    } else if (presenceNo.checked) {
-      detailsNo.classList.remove("d-none");
-      detailsYes.classList.add("d-none");
-    }
+    attivaSezione(detailsYes, presenceYes.checked);
+    attivaSezione(detailsNo, presenceNo.checked);
+    if (presenceFeedback) presenceFeedback.classList.add("d-none");
   };
 
   presenceYes.addEventListener("change", toggleAttendanceView);
   presenceNo.addEventListener("change", toggleAttendanceView);
+
+  // All'avvio nessuna delle due sezioni e' scelta: entrambe restano inerti.
+  attivaSezione(detailsYes, false);
+  attivaSezione(detailsNo, false);
 
   childrenSelect.addEventListener("change", (e) => {
     const count = parseInt(e.target.value, 10);
@@ -241,8 +358,8 @@ function initRsvpForm() {
         <button type="button" class="btn-close btn-sm" aria-label="Rimuovi Ospite" data-remove-target="guestBlock_${guestCounter}"></button>
       </div>
       <div class="mb-3">
-        <label class="form-label">Nome Completo</label>
-        <input type="text" class="form-control" name="ospite_aggiuntivo_nome_${guestCounter}" placeholder="Nome e Cognome">
+        <label class="form-label" for="guestName_${guestCounter}">Nome Completo</label>
+        <input type="text" class="form-control" id="guestName_${guestCounter}" name="ospite_aggiuntivo_nome_${guestCounter}" placeholder="Nome e Cognome">
       </div>
       <div>
         <label class="form-label d-block mb-1">Esigenze Alimentari</label>
@@ -302,50 +419,75 @@ function initRsvpForm() {
     guestsContainer.appendChild(card);
   });
 
+  const mostraConferma = () => {
+    form.classList.add("d-none");
+    feedbackAlert.classList.remove("d-none");
+    feedbackAlert.scrollIntoView({ behavior: "smooth", block: "center" });
+  };
+
+  const ripristinaPulsante = () => {
+    submitBtn.disabled = false;
+    submitBtn.textContent = "Invia Conferma";
+  };
+
   form.addEventListener("submit", (event) => {
     event.preventDefault();
-    event.stopPropagation();
+
+    // I bot compilano ogni campo che trovano, gli invitati non vedono questo.
+    if (honeypot && honeypot.value.trim() !== "") {
+      mostraConferma();
+      return;
+    }
 
     if (!form.checkValidity()) {
       form.classList.add("was-validated");
+
+      // I radio "presenza" sono nascosti dietro i riquadri grafici: il
+      // messaggio d'errore standard di Bootstrap non comparirebbe mai.
+      if (presenceFeedback) {
+        presenceFeedback.classList.toggle("d-none", presenceYes.checked || presenceNo.checked);
+      }
+
+      // Porta l'utente sul primo campo sbagliato invece di lasciarlo a
+      // chiedersi perche' il pulsante non faccia nulla.
+      const primoNonValido = form.querySelector(":invalid:not(fieldset)");
+      if (primoNonValido) {
+        primoNonValido.scrollIntoView({ behavior: "smooth", block: "center" });
+        if (typeof primoNonValido.focus === "function") {
+          primoNonValido.focus({ preventScroll: true });
+        }
+      }
       return;
     }
 
     form.classList.add("was-validated");
+
+    // Senza endpoint la risposta non arriverebbe a nessuno: lo si dice, invece
+    // di mostrare una conferma che non corrisponde al vero.
+    if (ENDPOINT_RSVP.trim() === "") {
+      if (notConfiguredAlert) {
+        notConfiguredAlert.classList.remove("d-none");
+        notConfiguredAlert.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+      return;
+    }
+
     submitBtn.disabled = true;
     submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Invio in corso...';
 
-    const formData = new FormData(form);
-
-    if (ENDPOINT_RSVP.trim() !== "") {
-      fetch(ENDPOINT_RSVP, {
-        method: "POST",
-        body: formData,
-        headers: { Accept: "application/json" }
-      })
-        .then((res) => {
-          if (res.ok) {
-            mostraConferma();
-          } else {
-            throw new Error("Errore durante la registrazione");
-          }
-        })
-        .catch(() => {
-          submitBtn.disabled = false;
-          submitBtn.textContent = "Invia Conferma";
-          alert("Si è verificato un errore durante l'invio. Riprova più tardi.");
-        });
-    } else {
-      setTimeout(() => {
+    fetch(ENDPOINT_RSVP, {
+      method: "POST",
+      body: new FormData(form),
+      headers: { Accept: "application/json" }
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("Errore durante la registrazione");
         mostraConferma();
-      }, 600);
-    }
-
-    function mostraConferma() {
-      form.classList.add("d-none");
-      feedbackAlert.classList.remove("d-none");
-      feedbackAlert.scrollIntoView({ behavior: "smooth", block: "center" });
-    }
+      })
+      .catch(() => {
+        ripristinaPulsante();
+        alert("Si è verificato un errore durante l'invio. Riprova più tardi o scrivici direttamente.");
+      });
   });
 }
 
@@ -360,20 +502,88 @@ function initCopyIban() {
 
   if (!btnCopy || !ibanElem) return;
 
-  btnCopy.addEventListener("click", () => {
-    const rawIban = ibanElem.textContent.trim();
-    navigator.clipboard.writeText(rawIban).then(() => {
-      const originalText = copyText.textContent;
-      copyText.textContent = "Copiato!";
-      copyIcon.className = "bi bi-check-lg me-1";
+  const segnalaCopia = () => {
+    const originalText = copyText.textContent;
+    copyText.textContent = "Copiato!";
+    copyIcon.className = "bi bi-check-lg me-1";
 
-      setTimeout(() => {
-        copyText.textContent = originalText;
-        copyIcon.className = "bi bi-clipboard me-1";
-      }, 2400);
-    }).catch(() => {
-      alert("Impossibile copiare automaticamente. Seleziona il testo manualmente.");
-    });
+    setTimeout(() => {
+      copyText.textContent = originalText;
+      copyIcon.className = "bi bi-clipboard me-1";
+    }, 2400);
+  };
+
+  btnCopy.addEventListener("click", () => {
+    // Si copiano solo le lettere e le cifre: spazi e parentesi del segnaposto
+    // farebbero rifiutare l'IBAN da molte app bancarie.
+    const iban = ibanElem.textContent.replace(/[^A-Za-z0-9]/g, "").toUpperCase();
+
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(iban).then(segnalaCopia).catch(copiaDiRiserva);
+    } else {
+      copiaDiRiserva();
+    }
+
+    // Su http:// e su alcuni browser da telefono l'API degli appunti non esiste.
+    function copiaDiRiserva() {
+      const appoggio = document.createElement("textarea");
+      appoggio.value = iban;
+      appoggio.setAttribute("readonly", "");
+      appoggio.style.position = "fixed";
+      appoggio.style.opacity = "0";
+      document.body.appendChild(appoggio);
+      appoggio.select();
+      let riuscito = false;
+      try {
+        riuscito = document.execCommand("copy");
+      } catch (e) {
+        riuscito = false;
+      }
+      document.body.removeChild(appoggio);
+      if (riuscito) {
+        segnalaCopia();
+      } else {
+        alert("Impossibile copiare automaticamente. Seleziona il testo manualmente.");
+      }
+    }
+  });
+}
+
+/**
+ * 8. Aggiunta dell'evento al calendario (file .ics)
+ */
+function initAddToCalendar() {
+  const btn = document.getElementById("btnAddCalendar");
+  if (!btn) return;
+
+  const perIcs = (iso) => new Date(iso).toISOString().replace(/[-:]/g, "").split(".")[0] + "Z";
+
+  btn.addEventListener("click", () => {
+    const righe = [
+      "BEGIN:VCALENDAR",
+      "VERSION:2.0",
+      "PRODID:-//Mirko e Alessia//Matrimonio 2028//IT",
+      "BEGIN:VEVENT",
+      `UID:matrimonio-mirko-alessia-2028@${window.location.hostname || "invito"}`,
+      `DTSTAMP:${perIcs(new Date().toISOString())}`,
+      `DTSTART:${perIcs(DATA_MATRIMONIO_INIZIO)}`,
+      `DTEND:${perIcs(DATA_MATRIMONIO_FINE)}`,
+      "SUMMARY:Matrimonio di Mirko e Alessia",
+      "DESCRIPTION:Rito civile alle 16:30\\, aperitivo\\, cena e festa fino alle 02:00.",
+      "LOCATION:Agriturismo Solive\\, Via Calvarole 15\\, 25030 Nigoline di Corte Franca (BS)",
+      "END:VEVENT",
+      "END:VCALENDAR"
+    ];
+
+    const blob = new Blob([righe.join("\r\n")], { type: "text/calendar;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "matrimonio-mirko-alessia.ics";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
   });
 }
 
@@ -388,6 +598,7 @@ function init() {
   initGallery();
   initRsvpForm();
   initCopyIban();
+  initAddToCalendar();
 }
 
 document.addEventListener("DOMContentLoaded", init);

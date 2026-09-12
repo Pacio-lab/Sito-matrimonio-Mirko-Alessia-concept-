@@ -15,7 +15,6 @@
   --font-sans: 'Lato', system-ui, -apple-system, sans-serif;
   --font-eyebrow: 'Cinzel', serif;
 
-  --hero-bg: url('images/hero.jpg');
   --transition-smooth: cubic-bezier(0.25, 1, 0.5, 1);
   --transition-fast: cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -334,7 +333,8 @@ body:not(.envelope-locked) .site-content {
    ========================================================================== */
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 2rem;
+  /* Lascia spazio alla barra di navigazione fissa quando si salta a una sezione */
+  scroll-padding-top: 5.5rem;
 }
 
 body {
@@ -436,6 +436,148 @@ a:hover, a:focus-visible {
   transition: width 0.1s linear;
 }
 
+/* Collegamento di salto, visibile solo con la tastiera */
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -100px;
+  z-index: 100000;
+  background-color: var(--moro);
+  color: var(--panna);
+  padding: 0.75rem 1.25rem;
+  border-radius: 2px;
+  font-family: var(--font-eyebrow);
+  font-size: 0.8rem;
+  letter-spacing: 0.12rem;
+  text-transform: uppercase;
+  transition: top 0.25s var(--transition-fast);
+}
+
+.skip-link:focus {
+  top: 1rem;
+  color: var(--panna);
+}
+
+/* ==========================================================================
+   3b. NAVIGAZIONE PRINCIPALE
+   ========================================================================== */
+.site-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9990;
+  background-color: rgba(245, 239, 231, 0.94);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(191, 176, 160, 0.5);
+  transform: translateY(-100%);
+  transition: transform 0.45s var(--transition-smooth);
+}
+
+.site-nav.is-visible {
+  transform: translateY(0);
+}
+
+.site-nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
+.site-nav-brand {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  letter-spacing: 0.3rem;
+  color: var(--moro);
+}
+
+.site-nav-toggle {
+  background: none;
+  border: 1px solid var(--greige);
+  border-radius: 2px;
+  color: var(--moro);
+  font-size: 1.3rem;
+  line-height: 1;
+  padding: 0.25rem 0.6rem;
+}
+
+.site-nav-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.6rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.site-nav-list a {
+  font-family: var(--font-eyebrow);
+  font-size: 0.72rem;
+  letter-spacing: 0.18rem;
+  text-transform: uppercase;
+  color: var(--moro);
+  padding-bottom: 2px;
+  border-bottom: 1px solid transparent;
+}
+
+.site-nav-list a:hover,
+.site-nav-list a:focus-visible,
+.site-nav-list a.is-active {
+  color: var(--cacao);
+  border-bottom-color: var(--mocha);
+}
+
+.site-nav-list .site-nav-cta {
+  background-color: var(--cacao);
+  color: var(--panna);
+  padding: 0.45rem 1.1rem;
+  border-radius: 2px;
+  border-bottom-color: transparent;
+}
+
+.site-nav-list .site-nav-cta:hover,
+.site-nav-list .site-nav-cta:focus-visible,
+.site-nav-list .site-nav-cta.is-active {
+  background-color: var(--moro);
+  color: var(--panna);
+  border-bottom-color: transparent;
+}
+
+@media (min-width: 992px) {
+  /* Su desktop il menu e' sempre aperto, senza il collapse di Bootstrap */
+  .site-nav-menu.collapse:not(.show) {
+    display: block;
+  }
+}
+
+@media (max-width: 991.98px) {
+  .site-nav-menu {
+    width: 100%;
+  }
+
+  /* A menu aperto lo sfondo deve essere pieno: con la sola trasparenza il
+     contenuto della pagina traspariva sotto le voci, rendendole illeggibili. */
+  .site-nav:has(.site-nav-menu.show),
+  .site-nav:has(.site-nav-menu.collapsing) {
+    background-color: var(--panna);
+    max-height: 100dvh;
+    overflow-y: auto;
+  }
+
+  .site-nav-list {
+    flex-direction: column;
+    gap: 0.9rem;
+    padding: 1.25rem 0 0.5rem;
+  }
+
+  .site-nav-list .site-nav-cta {
+    display: inline-block;
+  }
+}
+
 /* Pulsanti */
 .btn-custom {
   background-color: var(--cacao);
@@ -506,15 +648,16 @@ a:hover, a:focus-visible {
   width: 100%;
 }
 
-.hero-bg-media {
+img.hero-bg-media {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: var(--hero-bg);
-  background-size: cover;
-  background-position: center;
+  object-fit: cover;
+  /* Sposta il punto di interesse se la nuova foto ha il soggetto piu' in alto
+     o piu' in basso (es. "center 30%"). */
+  object-position: center;
   transform-origin: center center;
   animation: kenBurns 25s infinite alternate ease-in-out;
   z-index: 0;
@@ -561,7 +704,7 @@ a:hover, a:focus-visible {
   color: var(--greige);
 }
 
-.hero-content .hero-title {
+.hero-content h1.hero-title {
   animation-delay: 0.5s;
   font-size: clamp(3.2rem, 9vw, 6.4rem);
   font-weight: 300;
@@ -653,6 +796,13 @@ a:hover, a:focus-visible {
   color: var(--mocha);
   margin-top: 0.6rem;
   display: block;
+}
+
+.countdown-done {
+  font-family: var(--font-script);
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  color: var(--cacao);
+  margin-top: 2rem;
 }
 
 /* ==========================================================================
@@ -887,6 +1037,9 @@ a:hover, a:focus-visible {
    10. GALLERIA & LIGHTBOX
    ========================================================================== */
 .gallery-thumb {
+  display: block;
+  width: 100%;
+  padding: 0;
   overflow: hidden;
   position: relative;
   cursor: pointer;
@@ -904,6 +1057,7 @@ a:hover, a:focus-visible {
 
 .gallery-thumb-overlay {
   position: absolute;
+  display: flex;
   top: 0;
   left: 0;
   width: 100%;
@@ -1076,6 +1230,44 @@ a:hover, a:focus-visible {
   font-family: var(--font-serif);
   font-size: 1.15rem;
   padding: 1.25rem;
+}
+
+.rsvp-alert-warning {
+  background-color: rgba(191, 176, 160, 0.2);
+  border: 1px solid var(--cacao);
+  color: var(--moro);
+  border-radius: 2px;
+  font-size: 0.95rem;
+  padding: 1.25rem;
+}
+
+.rsvp-alert-warning code {
+  color: var(--cacao);
+  background-color: rgba(245, 239, 231, 0.8);
+  padding: 0.1rem 0.35rem;
+  border-radius: 2px;
+}
+
+.rsvp-privacy {
+  font-size: 0.82rem;
+  color: var(--cacao);
+  line-height: 1.6;
+}
+
+.attendance-feedback {
+  margin-top: 0.75rem;
+  font-size: 0.85rem;
+  color: #9B3B2F;
+}
+
+/* Campo trappola per i bot: fuori dallo schermo ma non display:none,
+   altrimenti molti crawler lo ignorano. */
+.rsvp-honeypot {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
 }
 
 /* ==========================================================================
@@ -1269,6 +1461,15 @@ a:hover, a:focus-visible {
 
   .gallery-thumb img,
   .story-img-wrap img {
+    transition: none;
+  }
+
+  .site-nav {
+    transition: none;
+  }
+
+  .sisempre-envelope-screen,
+  .site-content {
     transition: none;
   }
 }
